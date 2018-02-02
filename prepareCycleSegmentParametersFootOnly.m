@@ -12,6 +12,38 @@ if strcmp(Gait.gaittrial,'yes')
         end
     end
     
+    if isfield(Markers,'R_TTC')
+        % Shank parameters
+        % -------------------------------------------------------------
+        if strcmp(side,'Right')
+            % Shank Markers
+            Segment(3).rM = [Markers.R_TTC,Markers.R_TTC2,Markers.R_FAL];
+            % Shank axes
+            Z3 = Vnorm_array3(Markers.R_FAL-Markers.R_TAM);
+            Y3 = Vnorm_array3(Markers.R_TTC-Markers.R_TTC2);
+            X3 = Vnorm_array3(cross(Y3,Z3));
+            % Shank parameters
+            rP3 = Markers.R_TTC;
+            rD3 = (Markers.R_FAL+Markers.R_TAM)/2;
+            w3 = Z3;
+            u3 = X3;
+            Segment(3).Q = [u3;rP3;rD3;w3];
+        elseif strcmp(side,'Left')
+            % Shank Markers
+            Segment(3).rM = [Markers.L_TTC,Markers.L_TTC2,Markers.L_FAL];
+            % Shank axes
+            Z3 = Vnorm_array3(Markers.L_FAL-Markers.L_TAM);
+            Y3 = Vnorm_array3(Markers.L_TTC-Markers.L_TTC2);
+            X3 = Vnorm_array3(cross(Y3,Z3));
+            % Shank parameters
+            rP3 = Markers.L_TTC;
+            rD3 = (Markers.L_FAL+Markers.L_TAM)/2;
+            w3 = Z3;
+            u3 = X3;
+            Segment(3).Q = [u3;rP3;rD3;w3];
+        end
+    end
+    
     % Foot parameters
     % -------------------------------------------------------------
     if strcmp(side,'Right')
@@ -76,5 +108,20 @@ if strcmp(Gait.gaittrial,'yes')
     Kinematics.Ftilt = interp1(k,Foot.tilt,ko,'spline');
     Kinematics.Frota = interp1(k,Foot.rota,ko,'spline');
     Kinematics.Fobli = interp1(k,Foot.obli,ko,'spline');
+    
+    if isfield(Markers,'R_TTC')
+        Segment(2).T = Mprod_array3(Tinv_array3(Q2Tw_array3(Segment(3).Q)),...
+            Q2Tu_array3(Segment(2).Q));    
+        Segment(2).Euler = R2mobileZYX_array3(Segment(2).T(1:3,1:3,:));
+        Segment(2).dj = Vnop_array3(...
+            Segment(2).T(1:3,4,:),... Di+1 to Pi in SCS of segment i+1
+            repmat([0;0;1],[1 1 n]),... % Zi+1 in SCS of segment i+1
+            cross(Segment(2).T(1:3,1,:),repmat([0;0;1],[1 1 n])),...
+            Segment(2).T(1:3,1,:)); % % Xi in SCS of segment i+1
+        % Ankle (or wrist) Segment angles and displacements
+        Kinematics.FE2  = interp1(k,permute(Segment(2).Euler(1,1,:),[3,2,1])*180/pi,ko,'spline');
+        Kinematics.AA2  = interp1(k,permute(Segment(2).Euler(1,2,:),[3,2,1])*180/pi,ko,'spline');
+        Kinematics.IER2 = interp1(k,permute(Segment(2).Euler(1,3,:),[3,2,1])*180/pi,ko,'spline');
+    end
     
 end

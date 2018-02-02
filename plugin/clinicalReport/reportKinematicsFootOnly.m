@@ -216,6 +216,67 @@ Lkinematics = Condition.All.Lkinematics;
     box on;
     igraph = igraph+1;
     
+    y = y - yincr*7.5;
+    if isfield(Rkinematics(i),'FE2')
+        % Right/Left ankle flexion/extension
+        % ---------------------------------------------------------------------
+        axesGraph = axes;
+        set(axesGraph,'Position',[0 0 1 1]);
+        set(axesGraph,'Visible','Off');
+        Graph(igraph) = axes('position',[x(1)/pageWidth y/pageHeight ...
+            graphWidth/pageWidth graphHeight/pageHeight]);
+        set(Graph(igraph),'FontSize',8,'YGrid','on','XTick',[0 25 50 75 100],'YTick',-100:10:100);
+        hold on;
+        title('Ankle flexion/extension (Dorsi+)','FontWeight','Bold');
+        xlabel('Gait cycle (%)','FontSize',8,'HorizontalAlignment','center','VerticalAlignment','Middle'); ylabel('Angle (deg)','FontSize',8,'HorizontalAlignment','center','VerticalAlignment','Middle');
+        plot(1:100,zeros(100,1),'Linestyle','-','Linewidth',0.5,'Color','black');
+        corridor(Norm.Kinematics.FE2.mean,Norm.Kinematics.FE2.std,[0.5 0.5 0.5]);
+        if ~isempty(Rkinematics(i).FE2.mean)
+            corridor(Rkinematics(i).FE2.mean,Rkinematics(i).FE2.std,colorR(i,:));
+            plot(Rkinematics(i).FE2.mean,'Linestyle','-','Linewidth',2,'Color',colorR(i,:));
+        end
+        if ~isempty(Lkinematics(i).FE2.mean)
+            corridor(Lkinematics(i).FE2.mean,Lkinematics(i).FE2.std,colorL(i,:));
+            plot(Lkinematics(i).FE2.mean,'Linestyle','-','Linewidth',2,'Color',colorL(i,:));
+        end
+        axis tight;
+        YL = ylim;
+        YL = setAxisLim(YL,-40,40);
+        axis([0 100 YL(1) YL(2)]);
+        box on;
+        igraph = igraph+1;
+    end
+    
+    if isfield(Rkinematics(i),'IER2')
+        % Right/Left ankle internal/external rotation
+        % ---------------------------------------------------------------------
+        axesGraph = axes;
+        set(axesGraph,'Position',[0 0 1 1]);
+        set(axesGraph,'Visible','Off');
+        Graph(igraph) = axes('position',[x(3)/pageWidth y/pageHeight ...
+            graphWidth/pageWidth graphHeight/pageHeight]);
+        set(Graph(igraph),'FontSize',8,'YGrid','on','XTick',[0 25 50 75 100],'YTick',-100:10:100);
+        hold on;
+        title('Ankle internal/external rotation (Int+)','FontWeight','Bold');
+        xlabel('Gait cycle (%)','FontSize',8,'HorizontalAlignment','center','VerticalAlignment','Middle'); ylabel('Angle (deg)','FontSize',8,'HorizontalAlignment','center','VerticalAlignment','Middle');
+        plot(1:100,zeros(100,1),'Linestyle','-','Linewidth',0.5,'Color','black');
+        corridor(Norm.Kinematics.IER2.mean,Norm.Kinematics.IER2.std,[0.5 0.5 0.5]);
+        if ~isempty(Rkinematics(i).IER2.mean)
+            corridor(Rkinematics(i).IER2.mean,Rkinematics(i).IER2.std,colorR(i,:));
+            plot(Rkinematics(i).IER2.mean,'Linestyle','-','Linewidth',2,'Color',colorR(i,:));
+        end
+        if ~isempty(Lkinematics(i).IER2.mean)
+            corridor(Lkinematics(i).IER2.mean,Lkinematics(i).IER2.std,colorL(i,:));
+            plot(Lkinematics(i).IER2.mean,'Linestyle','-','Linewidth',2,'Color',colorL(i,:));
+        end
+        axis tight;
+        YL = ylim;
+        YL = setAxisLim(YL,-40,40);
+        axis([0 100 YL(1) YL(2)]);
+        box on;
+        igraph = igraph+1;
+    end
+    
     % Events
     % ---------------------------------------------------------------------
     Revent.p5.mean = Condition.All.Gaitparameters.right_stance_phase.mean;
