@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<RDF:RDF xmlns:NC="http://home.netscape.com/NC-rdf#"
+         xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#titlebar-placeholder-on-TabsToolbar-for-captions-buttons"
+                   width="106" />
+  <RDF:Description RDF:about="about:config#prefCol"
+                   ordinal="1"
+                   sortDirection="ascending" />
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#toolbar-menubar"
+                   autohide="false" />
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#main-window"
+                   height="768"
+                   width="913"
+                   screenX="1647"
+                   screenY="196"
+                   sizemode="maximized" />
+  <RDF:Description RDF:about="chrome://browser/content/preferences/preferences.xul#BrowserPreferences"
+                   screenX="194"
+                   screenY="145"
+                   lastSelected="panePrivacy" />
+  <RDF:Description RDF:about="about:config#valueCol"
+                   ordinal="7" />
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul">
+    <NC:persist RDF:resource="chrome://browser/content/browser.xul#navigator-toolbox"/>
+    <NC:persist RDF:resource="chrome://browser/content/browser.xul#main-window"/>
+    <NC:persist RDF:resource="chrome://browser/content/browser.xul#titlebar-placeholder-on-menubar-for-caption-buttons"/>
+    <NC:persist RDF:resource="chrome://browser/content/browser.xul#titlebar-placeholder-on-TabsToolbar-for-captions-buttons"/>
+    <NC:persist RDF:resource="chrome://browser/content/browser.xul#sidebar-box"/>
+    <NC:persist RDF:resource="chrome://browser/content/browser.xul#sidebar-title"/>
+    <NC:persist RDF:resource="chrome://browser/content/browser.xul#toolbar-menubar"/>
+  </RDF:Description>
+  <RDF:Description RDF:about="about:config#lockCol"
+                   ordinal="3" />
+  <RDF:Description RDF:about="about:config">
+    <NC:persist RDF:resource="about:config#prefCol"/>
+    <NC:persist RDF:resource="about:config#lockCol"/>
+    <NC:persist RDF:resource="about:config#typeCol"/>
+    <NC:persist RDF:resource="about:config#valueCol"/>
+  </RDF:Description>
+  <RDF:Description RDF:about="chrome://browser/content/preferences/preferences.xul">
+    <NC:persist RDF:resource="chrome://browser/content/preferences/preferences.xul#BrowserPreferences"/>
+  </RDF:Description>
+  <RDF:Description RDF:about="chrome://global/content/viewSource.xul#viewSource"
+                   screenX="1355"
+                   screenY="93"
+                   width="1174"
+                   height="861"
+                   sizemode="normal" />
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#navigator-toolbox"
+                   iconsize="small" />
+  <RDF:Description RDF:about="chrome://global/content/viewSource.xul">
+    <NC:persist RDF:resource="chrome://global/content/viewSource.xul#viewSource"/>
+  </RDF:Description>
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#sidebar-box"
+                   sidebarcommand=""
+                   width=""
+                   src="" />
+  <RDF:Description RDF:about="about:config#typeCol"
+                   ordinal="5" />
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#titlebar-placeholder-on-menubar-for-caption-buttons"
+                   width="106" />
+</RDF:RDF>

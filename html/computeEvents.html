@@ -1,0 +1,158 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>computeEvents</title><meta name="generator" content="MATLAB 7.13"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-10-21"><meta name="DC.source" content="computeEvents.m"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">% =========================================================================</span>
+<span class="comment">% REHAZENTER TOOLBOX</span>
+<span class="comment">% =========================================================================</span>
+<span class="comment">% File name:    computeBiomechanicalParameters</span>
+<span class="comment">% -------------------------------------------------------------------------</span>
+<span class="comment">% Subject:      Compute a set of biomechanical parameters</span>
+<span class="comment">% -------------------------------------------------------------------------</span>
+<span class="comment">% Inputs:       - Patient (structure)</span>
+<span class="comment">%               - Session (structure)</span>
+<span class="comment">%               - Condition (structure)</span>
+<span class="comment">% Outputs:      - Session (structure)</span>
+<span class="comment">%               - Condition (structure)</span>
+<span class="comment">% -------------------------------------------------------------------------</span>
+<span class="comment">% Author: F. Moissenet, C. Schreiber, A. Naaim</span>
+<span class="comment">% Date of creation: 26/03/2014</span>
+<span class="comment">% Version: 1</span>
+<span class="comment">% -------------------------------------------------------------------------</span>
+<span class="comment">% Updates: - 16/09/2014: Outputs have 101 rows (frames 0 to 100)</span>
+<span class="comment">%          - 26/09/2014: Auto selection the static file corresponding to</span>
+<span class="comment">%            the current condition OR ' TOUTES CONDITIONS' !!!!</span>
+<span class="comment">% =========================================================================</span>
+
+<span class="keyword">function</span> [Session] = computeEvents(Session)
+
+<span class="comment">% =========================================================================</span>
+<span class="comment">% Gait cycles</span>
+<span class="comment">% =========================================================================</span>
+disp([<span class="string">'    - Events OK'</span>]);
+<span class="keyword">for</span> i = 1:length(Session.Gait)
+
+    gait = Session.Gait(i).file;
+
+    <span class="comment">% Prepare gait cycle data</span>
+    <span class="comment">% -----------------------------------------------------------------</span>
+    <span class="comment">% Initialise variables</span>
+    clear <span class="string">f1</span> <span class="string">f2</span> <span class="string">e</span>;
+    n0 = btkGetFirstFrame(gait);
+    n1 = btkGetLastFrame(gait)-btkGetFirstFrame(gait)+1;
+    <span class="comment">% Detect foot strike and foot off events</span>
+    e = btkGetEvents(gait);
+    <span class="comment">% Set events data in the correct format</span>
+    Session.Gait(i).e = prepareEventsData(e);
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">    - Events OK
+</pre><pre class="codeoutput">Error using computeEvents (line 29)
+Not enough input arguments.
+</pre><p class="footer"><br>
+      Published with MATLAB&reg; 7.13<br></p></div><!--
+##### SOURCE BEGIN #####
+% =========================================================================
+% REHAZENTER TOOLBOX
+% =========================================================================
+% File name:    computeBiomechanicalParameters
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-
+% Subject:      Compute a set of biomechanical parameters
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-
+% Inputs:       - Patient (structure)
+%               - Session (structure)
+%               - Condition (structure)
+% Outputs:      - Session (structure)
+%               - Condition (structure)
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-
+% Author: F. Moissenet, C. Schreiber, A. Naaim
+% Date of creation: 26/03/2014
+% Version: 1
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-
+% Updates: - 16/09/2014: Outputs have 101 rows (frames 0 to 100)
+%          - 26/09/2014: Auto selection the static file corresponding to 
+%            the current condition OR ' TOUTES CONDITIONS' !!!!
+% =========================================================================
+
+function [Session] = computeEvents(Session)
+
+% =========================================================================
+% Gait cycles
+% =========================================================================
+disp(['    - Events OK']);  
+for i = 1:length(Session.Gait)
+      
+    gait = Session.Gait(i).file;
+
+    % Prepare gait cycle data
+    % REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH- 
+    % Initialise variables
+    clear f1 f2 e;      
+    n0 = btkGetFirstFrame(gait);
+    n1 = btkGetLastFrame(gait)-btkGetFirstFrame(gait)+1;
+    % Detect foot strike and foot off events
+    e = btkGetEvents(gait);
+    % Set events data in the correct format
+    Session.Gait(i).e = prepareEventsData(e);
+end
+##### SOURCE END #####
+--></body></html>
