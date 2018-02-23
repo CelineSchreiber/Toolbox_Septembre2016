@@ -53,28 +53,54 @@ if ~exist(File,'file')
     ExcelWorkbook.Close(false);
 end
 % Excel.Workbooks.Open(File); 
-[num, txt, tab] = xlsread(filename,1);
 
 % =========================================================================
 % Get patient information
 % =========================================================================
-Patient.lastname = char(tab(4,2));                                               % Patient last name
-Patient.firstname = char(tab(5,2));                                              % Patient first name
-Patient.gender = char(tab(6,2));                                                 % Gender: 'Homme' or 'Femme'
-Patient.birthdate = char(tab(7,2));                                              % Patient date of birth (YYYY-MM-DD)
+[~, temp1] = xlsread1(Excel,filename,1,'B7');
+[~, temp2] = xlsread1(Excel,filename,1,'B8');
+[~, temp3] = xlsread1(Excel,filename,1,'B9');
+[~, temp4] = xlsread1(Excel,filename,1,'B10');
+Patient.lastname = temp1{1};                                               % Patient last name
+Patient.firstname = temp2{1};                                              % Patient first name
+Patient.gender = temp3{1};                                                 % Gender: 'Homme' or 'Femme'
+Patient.birthdate = temp4{1};                                              % Patient date of birth (YYYY-MM-DD)
 
 % =========================================================================
 % Get session information
 % =========================================================================
-
-Session.weight = cell2mat(tab(8,2));                                                 % Patient weight (kg)
-Session.height = cell2mat(tab(9,2))*1e-2;                                            % Patient height (m)
-Session.reason = char(tab(10,2));                                             % Session reason
-Session.comments = char(tab(11,2)); 
-Session.system = char(tab(14,2));                                                 % System used: 'BTS' or 'Qualisys'
-Session.date = char(tab(15,2));                                                  % Date of the session (YYYY-MM-DD)
-Session.clinician = char(tab(16,2));
-Session.operator = char(tab(17,2));
+[temp5] = xlsread1(Excel,filename,1,'B11');
+[temp6] = xlsread1(Excel,filename,1,'B12');
+[~, temp7] = xlsread1(Excel,filename,1,'B13');
+[~, temp8] = xlsread1(Excel,filename,1,'B14');
+[~, temp9] = xlsread1(Excel,filename,1,'B17');
+[~, temp10] = xlsread1(Excel,filename,1,'B18');
+[~, temp11] = xlsread1(Excel,filename,1,'B19');
+[~, temp12] = xlsread1(Excel,filename,1,'B20');
+Session.weight = temp5(1);                                                 % Patient weight (kg)
+Session.height = temp6(1)*1e-2;                                            % Patient height (m)
+if ~isempty(temp7)
+    Session.reason = temp7{1};                                             % Session reason
+else
+    Session.reason = '';
+end
+if ~isempty(temp8)
+    Session.comments = temp8{1};                                           % Comments
+else
+    Session.comments = '';
+end
+Session.system = temp9{1};                                                 % System used: 'BTS' or 'Qualisys'
+Session.date = temp10{1};                                                  % Date of the session (YYYY-MM-DD)
+if ~isempty(temp11)
+    Session.clinician = temp11{1};                                         % Clinician
+else
+    Session.clinician = '';
+end
+if ~isempty(temp12)
+    Session.operator = temp12{1};                                          % Operator
+else
+    Session.operator = '';
+end                                            
 
 if strcmp(Session.system,'BTS')
     [temp101] = xlsread1(Excel,filename,3,'B1');
@@ -112,65 +138,102 @@ end
 % =========================================================================
 % Get protocole information
 % =========================================================================
-Session.markersset = char(tab(21,2));                                            % Markers set used
-Session.footmarkersset = char(tab(21,6));    
-Session.upperlimbsmarkersset = char(tab(22,6)); 
-Session.course = char(tab(22,2));                                                % Gait course: 'Piste de marche' or 'Tapis de marche'
-Session.channel{1} = char(tab(23,3));                                            % EMG channels (please use 'side_name1_name2' format)
-Session.channel{2} = char(tab(24,3));                                            % if none, put 'none'
-Session.channel{3} = char(tab(25,3)); 
-Session.channel{4} = char(tab(26,3)); 
-Session.channel{5} = char(tab(27,3)); 
-Session.channel{6} = char(tab(28,3)); 
-Session.channel{7} = char(tab(29,3)); 
-Session.channel{8} = char(tab(30,3)); 
-Session.channel{9} = char(tab(23,7)); 
-Session.channel{10} = char(tab(24,7)); 
-Session.channel{11} = char(tab(25,7)); 
-Session.channel{12} = char(tab(26,7)); 
-Session.channel{13} = char(tab(27,7)); 
-Session.channel{14} = char(tab(28,7)); 
-Session.channel{15} = char(tab(29,7)); 
-Session.channel{16} = char(tab(30,7)); 
+[~, temp13] = xlsread1(Excel,filename,1,'B24');
+[~, temp13b] = xlsread1(Excel,filename,1,'F24');
+[~, temp13c] = xlsread1(Excel,filename,1,'F25');
+[~, temp14] = xlsread1(Excel,filename,1,'B25');
+[~, temp15] = xlsread1(Excel,filename,1,'C26');
+[~, temp16] = xlsread1(Excel,filename,1,'C27');
+[~, temp17] = xlsread1(Excel,filename,1,'C28');
+[~, temp18] = xlsread1(Excel,filename,1,'C29');
+[~, temp19] = xlsread1(Excel,filename,1,'C30');
+[~, temp20] = xlsread1(Excel,filename,1,'C31');
+[~, temp21] = xlsread1(Excel,filename,1,'C32');
+[~, temp22] = xlsread1(Excel,filename,1,'C33');
+[~, temp23] = xlsread1(Excel,filename,1,'G26');
+[~, temp24] = xlsread1(Excel,filename,1,'G27');
+[~, temp25] = xlsread1(Excel,filename,1,'G28');
+[~, temp26] = xlsread1(Excel,filename,1,'G29');
+[~, temp27] = xlsread1(Excel,filename,1,'G30');
+[~, temp28] = xlsread1(Excel,filename,1,'G31');
+[~, temp29] = xlsread1(Excel,filename,1,'G32');
+[~, temp30] = xlsread1(Excel,filename,1,'G33');
+Session.markersset = temp13{1};                                            % Markers set used
+Session.footmarkersset = temp13b{1};    
+Session.upperlimbsmarkersset = temp13c{1}; 
+Session.course = temp14{1};                                                % Gait course: 'Piste de marche' or 'Tapis de marche'
+Session.channel{1} = temp15{1};                                            % EMG channels (please use 'side_name1_name2' format)
+Session.channel{2} = temp16{1};                                            % if none, put 'none'
+Session.channel{3} = temp17{1}; 
+Session.channel{4} = temp18{1}; 
+Session.channel{5} = temp19{1}; 
+Session.channel{6} = temp20{1}; 
+Session.channel{7} = temp21{1}; 
+Session.channel{8} = temp22{1}; 
+Session.channel{9} = temp23{1}; 
+Session.channel{10} = temp24{1}; 
+Session.channel{11} = temp25{1}; 
+Session.channel{12} = temp26{1}; 
+Session.channel{13} = temp27{1}; 
+Session.channel{14} = temp28{1}; 
+Session.channel{15} = temp29{1}; 
+Session.channel{16} = temp30{1}; 
 
 % =========================================================================
 % Get info (static or trial)
 % =========================================================================
-[s1,s2] = size(tab);
-for i=33:s1
-    if strncmp(tab(i,1),'static',6)
+
+for i=37:174
+    [~, test] = xlsread1(Excel,filename,1,['A',num2str(i)]);
+    if ~isempty(test)
+        if strncmp(test,'static',6)
             index_last_static=i;
+        end
     end
 end
 % =========================================================================
 % Get static information
 % =========================================================================
-j=1;
-for i = 33:index_last_static 
-    if strcmp(tab(i,7),'X') || strcmp(tab(i,8),'X') || strcmp(tab(i,9),'X') || strcmp(tab(i,11),'X') || strcmp(tab(i,12),'X')
-        Session.Static(j).condition = char(tab(i,4));
-        Session.Static(j).filename = [char(tab(i,1)),'.c3d'];
-        Session.Static(j).gaittrial = 'no';
-        Session.Static(j).emgtrial = 'no';
-        Session.Static(j).posturetrial = 'no';
-        Session.Static(j).foottrial = 'no';
-        Session.Static(j).upperlimbstrial = 'no';
-        if strcmp(tab(i,7),'X')                                       % The current record has been selected as a gait trial (kin/dyn)
-            Session.Static(j).gaittrial = 'yes';
+j = 1;
+for i = 37:index_last_static 
+    [~, test] = xlsread1(Excel,filename,1,['A',num2str(i)]);
+    if ~isempty(test)
+        [~, test1] = xlsread1(Excel,filename,1,['F',num2str(i)]);        % Cell checked or not?
+        if strcmp(test1,'X')                                               % Test tracking
+            [~, test2] = xlsread1(Excel,filename,1,['G',num2str(i)]);    % Cell checked or not?   
+            [~, test3] = xlsread1(Excel,filename,1,['H',num2str(i)]);
+            [~, test4] = xlsread1(Excel,filename,1,['I',num2str(i)]);
+            [~, test5] = xlsread1(Excel,filename,1,['K',num2str(i)]);
+            [~, test6] = xlsread1(Excel,filename,1,['L',num2str(i)]);
+            if ~isempty(test2) || ~isempty(test3) || ~isempty(test4) || ~isempty(test5) || ~isempty(test6)
+                [~, tmp1] = xlsread1(Excel,filename,1,['D',num2str(i)]); % Condition
+                Session.Static(j).condition = tmp1{1};
+                Session.Static(j).filename = [char(test),'.c3d'];
+                Session.Static(j).gaittrial = 'no';
+                Session.Static(j).emgtrial = 'no';
+                Session.Static(j).posturetrial = 'no';
+                Session.Static(j).foottrial = 'no';
+                Session.Static(j).upperlimbstrial = 'no';
+                if strcmp(test2,'X')                                       % The current record has been selected as a gait trial (kin/dyn)
+                    Session.Static(j).gaittrial = 'yes';
+                end
+                if strcmp(test3,'X')                                       % The current record has been selected as a EMG trial
+                    Session.Static(j).emgtrial = 'yes';
+                end
+                if strcmp(test4,'X')                                       % The current record has been selected as a posture trial
+                    Session.Static(j).posturetrial = 'yes';
+                end
+                if strcmp(test5,'X')                                       % The current record has been selected as a posture trial
+                    Session.Static(j).foottrial = 'yes';
+                end
+                if strcmp(test6,'X')                                       % The current record has been selected as a posture trial
+                    Session.Static(j).upperlimbstrial = 'yes';
+                end
+                j = j+1;
+            end
         end
-        if strcmp(tab(i,8),'X')                                       % The current record has been selected as a EMG trial
-            Session.Static(j).emgtrial = 'yes';
-        end
-        if strcmp(tab(i,9),'X')                                     % The current record has been selected as a posture trial
-            Session.Static(j).posturetrial = 'yes';
-        end
-        if strcmp(tab(i,11),'X')                                    % The current record has been selected as a posture trial
-            Session.Static(j).foottrial = 'yes';
-        end
-        if strcmp(tab(i,12),'X')                                      % The current record has been selected as a posture trial
-            Session.Static(j).upperlimbstrial = 'yes';
-        end
-        j=j+1;
+    else
+        break;
     end
 end
 
@@ -178,46 +241,58 @@ end
 % Get records information
 % =========================================================================
 j = 1;
-for i = (index_last_static+1):s1 
-    if strncmp(tab(i,1),'gait',4)
-        if strcmp(tab(i,7),'X') || strcmp(tab(i,8),'X') || strcmp(tab(i,9),'X') || strcmp(tab(i,11),'X') || strcmp(tab(i,12),'X')
-            Session.Gait(j).s(1,1) = cell2mat(tab(i,2));                   % Column 1: right foot, column2: left foot
-            Session.Gait(j).s(1,2) = cell2mat(tab(i,3));  
-            Session.Gait(j).condition = char(tab(i,4));
-            if ~isnan(cell2mat(tab(i,5)))
-                Session.Gait(j).details = char(tab(i,5));
+for i = (index_last_static+1):174 
+    [~, test] = xlsread1(Excel,filename,1,['A',num2str(i)]);
+    if ~isempty(test)
+        [~, test1] = xlsread1(Excel,filename,1,['G',num2str(i)]);        % Cell checked or not?   
+        [~, test2] = xlsread1(Excel,filename,1,['H',num2str(i)]);
+        [~, test3] = xlsread1(Excel,filename,1,['I',num2str(i)]);
+        [~, test4] = xlsread1(Excel,filename,1,['K',num2str(i)]);
+        [~, test5] = xlsread1(Excel,filename,1,['L',num2str(i)]);
+        if ~isempty(test1) || ~isempty(test2) || ~isempty(test3) || ~isempty(test4) || ~isempty(test5)
+            tmp1 = xlsread1(Excel,filename,1,['B',num2str(i)]);            % PF Right
+            tmp2 = xlsread1(Excel,filename,1,['C',num2str(i)]);            % PF Left
+            Session.Gait(j).s(1,1) = tmp1;                                 % Column 1: right foot, column2: left foot
+            Session.Gait(j).s(1,2) = tmp2;                                 % No GRF: 0, GRF on forceplate1: 1, GRF onf forceplate2: 2
+            [~, tmp3] = xlsread1(Excel,filename,1,['D',num2str(i)]);     % Condition
+            [~, tmp4] = xlsread1(Excel,filename,1,['E',num2str(i)]);     % Details
+            Session.Gait(j).condition = tmp3{1};
+            if ~isempty(tmp4)
+                Session.Gait(j).details = tmp4{1};
+            else
+                Session.Gait(j).details = '';
             end
-            Session.Gait(j).filename = [char(tab(i,1)),'.c3d'];
+            Session.Gait(j).filename = [char(test),'.c3d'];
             Session.Gait(j).gaittrial = 'no';
             Session.Gait(j).emgtrial = 'no';
             Session.Gait(j).posturetrial = 'no';
             Session.Gait(j).foottrial = 'no';
             Session.Gait(j).upperlimbstrial = 'no';
-            if strcmp(tab(i,7),'X')                                           % The current record has been selected as a gait trial (kin/dyn)
+            if strcmp(test1,'X')                                           % The current record has been selected as a gait trial (kin/dyn)
                 Session.Gait(j).gaittrial = 'yes';  
             end
-            if strcmp(tab(i,8),'X')                                           % The current record has been selected as a EMG trial
+            if strcmp(test2,'X')                                           % The current record has been selected as a EMG trial
                 Session.Gait(j).emgtrial = 'yes';
             end            
-            if strcmp(tab(i,9),'X')                                          % The current record has been selected as a posture trial
+            if strcmp(test3,'X')                                           % The current record has been selected as a posture trial
                 Session.Gait(j).posturetrial = 'yes';
             end
-            if strcmp(tab(i,10),'X')                                         % The current record has been selected as a posture trial
+            if strcmp(test4,'X')                                           % The current record has been selected as a posture trial
                 Session.Gait(j).foottrial = 'yes';
             end
-            if strcmp(tab(i,11),'X')                                          % The current record has been selected as a posture trial
+            if strcmp(test5,'X')                                           % The current record has been selected as a posture trial
                 Session.Gait(j).upperlimbstrial = 'yes';
             end
             j = j+1; 
         end
+    else
+        break;
     end
 end
 
 % =========================================================================
 % Get clinical information
 % =========================================================================
-
-[num, txt, tab] = xlsread(filename,2);
 [~, temp31] = xlsread1(Excel,filename,2,'B7');
 [~, temp32] = xlsread1(Excel,filename,2,'B8');
 [~, temp33] = xlsread1(Excel,filename,2,'B9');
@@ -233,78 +308,78 @@ end
 [~, temp43] = xlsread1(Excel,filename,2,'B23');
 [~, temp44] = xlsread1(Excel,filename,2,'B24');
 [~, temp45] = xlsread1(Excel,filename,2,'B25');
-if ~isnan(cell2mat(tab(7,2)))                                                        % Pathology name: view full list in documentation
-    Pathology.name = char(tab(7,2));
+if ~isempty(temp31)                                                        % Pathology name: view full list in documentation
+    Pathology.name = temp31{1};
 else
     Pathology.name = '';
 end
-if ~isnan(cell2mat(tab(8,2)))                                                       % Pathology type: neurologic, ortho/traumotologic
-    Pathology.type = char(tab(8,2));
+if ~isempty(temp32)                                                        % Pathology type: neurologic, ortho/traumotologic
+    Pathology.type = temp32{1};
 else
     Pathology.type = '';
 end
-if ~isnan(cell2mat(tab(9,2)))                                                  % Comments
-    Pathology.comments = char(tab(9,2));
+if ~isempty(temp33)                                                        % Comments
+    Pathology.comments = temp33{1};
 else
     Pathology.comments = '';
 end
-if ~isnan(cell2mat(tab(11,2)))                                                     % Accident date
-    Pathology.accidentdate = char(tab(11,2));
+if ~isempty(temp34)                                                        % Accident date
+    Pathology.accidentdate = temp34{1};
 else
     Pathology.accidentdate = '';
 end
-if ~isnan(cell2mat(tab(12,2)))                                                       % Accident type: AVC ischio, AVC hemo, other
-    Pathology.accidenttype = char(tab(12,2));
+if ~isempty(temp35)                                                        % Accident type: AVC ischio, AVC hemo, other
+    Pathology.accidenttype = temp35{1};
 else
     Pathology.accidenttype = '';
 end
-if ~isnan(cell2mat(tab(14,2)))                                                      % Affected side: right, left, both
-    Pathology.affectedside = char(tab(14,2)); 
+if ~isempty(temp36)                                                        % Affected side: right, left, both
+    Pathology.affectedside = temp36{1}; 
 else
     Pathology.affectedside = '';
 end                 
-if ~isnan(cell2mat(tab(15,2)))                                                        % Affected limb: upper, lower, both
-    Pathology.affectedlimb = char(tab(15,2));
+if ~isempty(temp37)                                                        % Affected limb: upper, lower, both
+    Pathology.affectedlimb = temp37{1};
 else
     Pathology.affectedlimb = '';
 end
-if ~isnan(cell2mat(tab(18,2)))                                                        % Last injection date
-    Treatment.injectiondate = char(tab(18,2));
+if ~isempty(temp38)                                                        % Last injection date
+    Treatment.injectiondate = temp38{1};
 else
     Treatment.injectiondate = '';
 end
-if ~isnan(cell2mat(tab(19,2)))                                                        % Injected muscle 1
-    Treatment.injectedmuscle1 = char(tab(19,2));
+if ~isempty(temp39)                                                        % Injected muscle 1
+    Treatment.injectedmuscle1 = temp39{1};
 else
     Treatment.injectedmuscle1 = '';
 end
-if ~isnan(cell2mat(tab(20,2)))                                                        % Injected muscle 2
-    Treatment.injectedmuscle2 = char(tab(20,2));
+if ~isempty(temp40)                                                        % Injected muscle 2
+    Treatment.injectedmuscle2 = temp40{1};
 else
     Treatment.injectedmuscle2 = '';
 end
-if ~isnan(cell2mat(tab(21,2)))                                                        % Injected muscle 3
-    Treatment.injectedmuscle3 = char(tab(21,2));
+if ~isempty(temp41)                                                        % Injected muscle 3
+    Treatment.injectedmuscle3 = temp41{1};
 else
     Treatment.injectedmuscle3 = '';
 end
-if ~isnan(cell2mat(tab(22,2)))                                                        % Injected muscle 4
-    Treatment.injectedmuscle4 = char(tab(22,2));
+if ~isempty(temp42)                                                        % Injected muscle 4
+    Treatment.injectedmuscle4 = temp42{1};
 else
     Treatment.injectedmuscle4 = '';
 end
-if ~isnan(cell2mat(tab(23,2)))                                                        % Injected muscle 5
-    Treatment.injectedmuscle5 = char(tab(23,2));
+if ~isempty(temp43)                                                        % Injected muscle 5
+    Treatment.injectedmuscle5 = temp43{1};
 else
     Treatment.injectedmuscle5 = '';
 end
-if ~isnan(cell2mat(tab(24,2)))                                                        % Last surgery date
-    Treatment.surgerydate = char(tab(24,2));
+if ~isempty(temp44)                                                        % Last surgery date
+    Treatment.surgerydate = temp44{1};
 else
     Treatment.surgerydate = '';
 end
-if ~isnan(cell2mat(tab(25,2)))                                                        % Last surgery purpose
-    Treatment.surgerypurpose = char(tab(25,2));
+if ~isempty(temp45)                                                        % Last surgery purpose
+    Treatment.surgerypurpose = temp45{1};
 else
     Treatment.surgerypurpose = '';
 end

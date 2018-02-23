@@ -52,7 +52,7 @@ addpath([pwd,'\toolbox\Toolbox_M_Inverse_Dynamics']);
 addpath([pwd,'\toolbox\queryMySQL']);
 addpath([pwd,'\toolbox\queryMySQL\src']);
 addpath([pwd,'\toolbox\xlsread1']);
-matFolder = filesFolder(1:(end-10));
+matFolder = filesFolder(1:(end-12));
 toolboxFolder = pwd;
 cd(toolboxFolder);
 if nargin == 0
@@ -64,7 +64,7 @@ end
 % =========================================================================
 disp('>> Import session information ...');
 if ~exist('Session','var')
-    [Patient,Pathology,Treatment,Examination,Session] = sessionInformation(filesFolder);
+    [Patient,Pathology,Treatment,Examination,Session] = sessionInformation_saved(filesFolder);
 end
 disp(['  > Patient: ',Patient.lastname,' ',Patient.firstname,' ',Patient.birthdate]);
 disp(['  > Session: ',Session.date]);
