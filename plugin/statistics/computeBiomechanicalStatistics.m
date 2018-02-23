@@ -48,9 +48,7 @@ if ~strcmp(Session.markersset,'Aucun')
     for i = 1:length(names)
         temp = [];
         for j = 1:ngait
-            if isfield(Condition.Gait(j).Rkinematics,(names{i}))
-                temp = [temp Condition.Gait(j).Rkinematics.(names{i})];
-            end
+            temp = [temp Condition.Gait(j).Rkinematics.(names{i})];
         end
         Condition.All.Rkinematics.(names{i}).data = temp;
         Condition.All.Rkinematics.(names{i}).mean = nanmean(temp,2);
@@ -77,9 +75,7 @@ if ~strcmp(Session.markersset,'Aucun')
     for i = 1:length(names)
         temp = [];
         for j = 1:ngait
-            if isfield(Condition.Gait(j).Lkinematics,(names{i}))
-                temp = [temp Condition.Gait(j).Lkinematics.(names{i})];
-            end
+            temp = [temp Condition.Gait(j).Lkinematics.(names{i})];
         end
         Condition.All.Lkinematics.(names{i}).data = temp;
         Condition.All.Lkinematics.(names{i}).mean = nanmean(temp,2);

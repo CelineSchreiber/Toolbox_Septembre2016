@@ -197,24 +197,6 @@ elseif strcmp(system,'Qualisys')
 end
 
 % =====================================================================
-% Orientation Thigh segment
-% =====================================================================
-if strcmp(system,'Qualisys')
-    % Tilt  
-    Thigh.T = Q2Tw_array3(Segment(4).Q);
-    Thigh.Euler = R2fixedZYX_array3(Thigh.T(1:3,1:3,:));
-    Thigh.tilt = permute(Thigh.Euler(:,1,:),[3,2,1])*180/pi;
-end
-Kinematics.Thigh = interp1(k,Thigh.tilt,ko,'spline');
-% =====================================================================
-% Distance Malléoles
-% =====================================================================
-
-LM=permute(Markers.L_FAL(:,:,:),[3,2,1]);
-RM=permute(Markers.R_FAL(:,:,:),[3,2,1]);
-dist_mall=sqrt((LM(:,:,1)-RM(:,:,1)).^2+(LM(:,:,2)-RM(:,:,2)).^2+(LM(:,:,3)-RM(:,:,3)).^2);
-Kinematics.DMall = interp1(k,dist_mall,ko,'spline');
-% =====================================================================
 % Export kinematics parameters
 % =====================================================================
 % Pelvis

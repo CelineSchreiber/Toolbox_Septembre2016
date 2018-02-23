@@ -17,10 +17,10 @@ if strcmp(Gait.gaittrial,'yes')
         % -------------------------------------------------------------
         if strcmp(side,'Right')
             % Shank Markers
-            Segment(3).rM = [Markers.R_TTC,Markers.R_TTC1,Markers.R_FAL];
+            Segment(3).rM = [Markers.R_TTC,Markers.R_TTC2,Markers.R_FAL];
             % Shank axes
             Z3 = Vnorm_array3(Markers.R_FAL-Markers.R_TAM);
-            Y3 = Vnorm_array3(Markers.R_TTC-Markers.R_TTC1);
+            Y3 = Vnorm_array3(Markers.R_TTC-Markers.R_TTC2);
             X3 = Vnorm_array3(cross(Y3,Z3));
             % Shank parameters
             rP3 = Markers.R_TTC;
@@ -30,10 +30,10 @@ if strcmp(Gait.gaittrial,'yes')
             Segment(3).Q = [u3;rP3;rD3;w3];
         elseif strcmp(side,'Left')
             % Shank Markers
-            Segment(3).rM = [Markers.L_TTC,Markers.L_TTC1,Markers.L_FAL];
+            Segment(3).rM = [Markers.L_TTC,Markers.L_TTC2,Markers.L_FAL];
             % Shank axes
             Z3 = Vnorm_array3(Markers.L_FAL-Markers.L_TAM);
-            Y3 = Vnorm_array3(Markers.L_TTC-Markers.L_TTC1);
+            Y3 = Vnorm_array3(Markers.L_TTC-Markers.L_TTC2);
             X3 = Vnorm_array3(cross(Y3,Z3));
             % Shank parameters
             rP3 = Markers.L_TTC;
@@ -119,7 +119,7 @@ if strcmp(Gait.gaittrial,'yes')
             cross(Segment(2).T(1:3,1,:),repmat([0;0;1],[1 1 n])),...
             Segment(2).T(1:3,1,:)); % % Xi in SCS of segment i+1
         % Ankle (or wrist) Segment angles and displacements
-        Kinematics.FE2  = interp1(k,permute(Segment(2).Euler(1,1,:),[3,2,1])*180/pi,ko,'spline')-90;
+        Kinematics.FE2  = interp1(k,permute(Segment(2).Euler(1,1,:),[3,2,1])*180/pi,ko,'spline');
         Kinematics.AA2  = interp1(k,permute(Segment(2).Euler(1,2,:),[3,2,1])*180/pi,ko,'spline');
         Kinematics.IER2 = interp1(k,permute(Segment(2).Euler(1,3,:),[3,2,1])*180/pi,ko,'spline');
     end
