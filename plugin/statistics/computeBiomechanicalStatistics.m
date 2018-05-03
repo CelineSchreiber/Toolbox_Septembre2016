@@ -229,64 +229,68 @@ if  ~strcmp(Session.markersset,'Paramètres') && ~strcmp(Session.markersset,'Aucu
     % =========================================================================
     % SENSITIVITY (MEAN, STD, TTEST)
     % =========================================================================
-    if ~isempty(Condition.Gait(1).RSensitivity)
-        names1 = fieldnames(Condition.Gait(1).RSensitivity.function);
-        for k=1:length(names1)
-            temp = [];temp2=[];
-            for j = 1:ngait
-                if ~isempty(Condition.Gait(j).RSensitivity)
-                    temp = [temp Condition.Gait(j).RSensitivity.function.(names1{k})];
-                    temp2 = [temp2 Condition.Gait(j).RSensitivity.contribution.(names1{k})];
+    if isfield(Condition.Gait(1),'RSensitivity')
+        if ~isempty(Condition.Gait(1).RSensitivity)
+            names1 = fieldnames(Condition.Gait(1).RSensitivity.function);
+            for k=1:length(names1)
+                temp = [];temp2=[];
+                for j = 1:ngait
+                    if ~isempty(Condition.Gait(j).RSensitivity)
+                        temp = [temp Condition.Gait(j).RSensitivity.function.(names1{k})];
+                        temp2 = [temp2 Condition.Gait(j).RSensitivity.contribution.(names1{k})];
+                    end
                 end
+                Condition.All.RSensitivity.function.(names1{k}).data = temp;
+                Condition.All.RSensitivity.function.(names1{k}).mean = nanmean(temp,2);
+                Condition.All.RSensitivity.function.(names1{k}).std  = nanstd(temp,1,2);
+                Condition.All.RSensitivity.contribution.(names1{k}).data = temp2;
+                Condition.All.RSensitivity.contribution.(names1{k}).mean = nanmean(temp2,2);
+                Condition.All.RSensitivity.contribution.(names1{k}).std  = nanstd(temp2,1,2);
             end
-            Condition.All.RSensitivity.function.(names1{k}).data = temp;
-            Condition.All.RSensitivity.function.(names1{k}).mean = nanmean(temp,2);
-            Condition.All.RSensitivity.function.(names1{k}).std  = nanstd(temp,1,2);
-            Condition.All.RSensitivity.contribution.(names1{k}).data = temp2;
-            Condition.All.RSensitivity.contribution.(names1{k}).mean = nanmean(temp2,2);
-            Condition.All.RSensitivity.contribution.(names1{k}).std  = nanstd(temp2,1,2);
-        end
-        names2=fieldnames(Condition.Gait(1).RSensitivity);
-        for k=3:length(names2)
-            temp = [];
-            for j = 1:ngait
-                if ~isempty(Condition.Gait(j).RSensitivity)
-                    temp = [temp Condition.Gait(j).RSensitivity.(names2{k})];
+            names2=fieldnames(Condition.Gait(1).RSensitivity);
+            for k=3:length(names2)
+                temp = [];
+                for j = 1:ngait
+                    if ~isempty(Condition.Gait(j).RSensitivity)
+                        temp = [temp Condition.Gait(j).RSensitivity.(names2{k})];
+                    end
                 end
+                Condition.All.RSensitivity.(names2{k}).data = temp;
+                Condition.All.RSensitivity.(names2{k}).mean = nanmean(temp,2);
+                Condition.All.RSensitivity.(names2{k}).std  = nanstd(temp,1,2);
             end
-            Condition.All.RSensitivity.(names2{k}).data = temp;
-            Condition.All.RSensitivity.(names2{k}).mean = nanmean(temp,2);
-            Condition.All.RSensitivity.(names2{k}).std  = nanstd(temp,1,2);
         end
     end
-    if ~isempty(Condition.Gait(1).LSensitivity)
-        names1 = fieldnames(Condition.Gait(1).LSensitivity.function);
-        for k=1:length(names1)
-            temp = [];temp2=[];
-            for j = 1:ngait
-                if ~isempty(Condition.Gait(j).LSensitivity)
-                    temp = [temp Condition.Gait(j).LSensitivity.function.(names1{k})];
-                    temp2 = [temp2 Condition.Gait(j).LSensitivity.contribution.(names1{k})];
+    if isfield(Condition.Gait(1),'LSensitivity')
+        if ~isempty(Condition.Gait(1).LSensitivity)
+            names1 = fieldnames(Condition.Gait(1).LSensitivity.function);
+            for k=1:length(names1)
+                temp = [];temp2=[];
+                for j = 1:ngait
+                    if ~isempty(Condition.Gait(j).LSensitivity)
+                        temp = [temp Condition.Gait(j).LSensitivity.function.(names1{k})];
+                        temp2 = [temp2 Condition.Gait(j).LSensitivity.contribution.(names1{k})];
+                    end
                 end
+                Condition.All.LSensitivity.function.(names1{k}).data = temp;
+                Condition.All.LSensitivity.function.(names1{k}).mean = nanmean(temp,2);
+                Condition.All.LSensitivity.function.(names1{k}).std  = nanstd(temp,1,2);
+                Condition.All.LSensitivity.contribution.(names1{k}).data = temp2;
+                Condition.All.LSensitivity.contribution.(names1{k}).mean = nanmean(temp2,2);
+                Condition.All.LSensitivity.contribution.(names1{k}).std  = nanstd(temp2,1,2);
             end
-            Condition.All.LSensitivity.function.(names1{k}).data = temp;
-            Condition.All.LSensitivity.function.(names1{k}).mean = nanmean(temp,2);
-            Condition.All.LSensitivity.function.(names1{k}).std  = nanstd(temp,1,2);
-            Condition.All.LSensitivity.contribution.(names1{k}).data = temp2;
-            Condition.All.LSensitivity.contribution.(names1{k}).mean = nanmean(temp2,2);
-            Condition.All.LSensitivity.contribution.(names1{k}).std  = nanstd(temp2,1,2);
-        end
-        names2=fieldnames(Condition.Gait(1).LSensitivity);
-        for k=3:length(names2)
-            temp = [];
-            for j = 1:ngait
-                if ~isempty(Condition.Gait(j).LSensitivity)
-                    temp = [temp Condition.Gait(j).LSensitivity.(names2{k})];
+            names2=fieldnames(Condition.Gait(1).LSensitivity);
+            for k=3:length(names2)
+                temp = [];
+                for j = 1:ngait
+                    if ~isempty(Condition.Gait(j).LSensitivity)
+                        temp = [temp Condition.Gait(j).LSensitivity.(names2{k})];
+                    end
                 end
+                Condition.All.LSensitivity.(names2{k}).data = temp;
+                Condition.All.LSensitivity.(names2{k}).mean = nanmean(temp,2);
+                Condition.All.LSensitivity.(names2{k}).std  = nanstd(temp,1,2);
             end
-            Condition.All.LSensitivity.(names2{k}).data = temp;
-            Condition.All.LSensitivity.(names2{k}).mean = nanmean(temp,2);
-            Condition.All.LSensitivity.(names2{k}).std  = nanstd(temp,1,2);
         end
     end
     

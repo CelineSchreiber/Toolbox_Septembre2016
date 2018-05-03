@@ -113,7 +113,7 @@ if ~strcmp(Session.markersset,'Aucun')
             ((Lmarkers.R_IAS(1,:,1)+Lmarkers.L_IAS(1,:,1))/2))/Gaitparameters.left_gait_cycle]);
     end
     L0=(Session.right_leg_length+Session.right_leg_length)/2;
-    Gaitparameters.mean_velocity_adim=Gaitparameters.mean_velocity/L0;
+    Gaitparameters.mean_velocity_adim=Gaitparameters.mean_velocity/sqrt(9.81*L0);
 end
 
 if Gaitparameters.mean_velocity<0.06 %TAPIS!!!
