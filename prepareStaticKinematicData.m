@@ -35,6 +35,14 @@ for i = 1:size(names,1)
         Markers.(names{i})(:,3) = temp3;
     end
 
+    if strcmp(system,'Fukuchi')
+        temp1 = Markers.(names{i})(:,1);
+        temp2 = -Markers.(names{i})(:,3);
+        temp3 = Markers.(names{i})(:,2);
+        Markers.(names{i})(:,1) = temp1;
+        Markers.(names{i})(:,2) = temp2;
+        Markers.(names{i})(:,3) = temp3;
+    end
 % =========================================================================
 % Convert from mm to m
 % =========================================================================

@@ -48,6 +48,21 @@ elseif strcmp(side,'Left')
 end
 n1 = fix(stop-start+1);
 
+% % =================================================================
+% % "Zeeroing" the plateforms
+% % =================================================================
+% if s ~= 0 && ~isempty(Grf)
+%     mGrf.F = mean(Grf(s).F(:,:,1:start-10),3);
+%     Grf(s).F(1,:,1:end) = Grf(s).F(1,:,1:end) - mGrf.F(1);
+%     Grf(s).F(2,:,1:end) = Grf(s).F(2,:,1:end) - mGrf.F(2);
+%     Grf(s).F(3,:,1:end) = Grf(s).F(3,:,1:end) - mGrf.F(3);
+%     
+%     mGrf.M = mean(Grf(s).M(:,:,1:start-10),3);
+%     Grf(s).M(1,:,1:end) = Grf(s).M(1,:,1:end) - mGrf.M(1);
+%     Grf(s).M(2,:,1:end) = Grf(s).M(2,:,1:end) - mGrf.M(2);
+%     Grf(s).M(3,:,1:end) = Grf(s).M(3,:,1:end) - mGrf.M(3);
+% end
+
 % =====================================================================
 % Export the new values
 % =====================================================================

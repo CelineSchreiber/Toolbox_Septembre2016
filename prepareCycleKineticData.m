@@ -21,7 +21,7 @@
 %          - 16/12/2014 - Filt the data (Btw 2nd order, 15Hz, lowpass)
 % =========================================================================
 
-function Grf = prepareCycleKineticData(Grf,Gait,n1,n2,f2,minusX,system)
+function [Grf,Gait] = prepareCycleKineticData(Grf,Gait,n1,n2,f2,minusX,system)
 
 if ~isempty(Grf)
 
@@ -37,11 +37,11 @@ if ~isempty(Grf)
     % Convert from mm to m for Qualisys data
     % =====================================================================
     
-        if strcmp(system,'Qualisys')
-            Grf(1).M = Grf(1).M*10^(-3);
-            Grf(1).P = Grf(1).P*10^(-3);
-            Grf(2).M = Grf(2).M*10^(-3);
-            Grf(2).P = Grf(2).P*10^(-3);
+        if strcmp(system,'Qualisys')|strcmp(system,'Fukuchi')
+            for i=1:length(Grf)
+                Grf(i).M = Grf(i).M*10^(-3);
+                Grf(i).P = Grf(i).P*10^(-3);
+            end
         end
         
     % =====================================================================
@@ -49,106 +49,59 @@ if ~isempty(Grf)
     % =====================================================================
         if strcmp(system,'BTS')
             % Forceplate 1
-            temp1 = Grf(1).P(:,3);
-            temp2 = Grf(1).P(:,2);
-            temp3 = -Grf(1).P(:,1);
-            Grf(1).P(:,1) = temp1;
-            Grf(1).P(:,2) = temp2;
-            Grf(1).P(:,3) = temp3;
-            temp1 = Grf(1).F(:,3);
-            temp2 = Grf(1).F(:,2);
-            temp3 = -Grf(1).F(:,1);
-            Grf(1).F(:,1) = temp1;
-            Grf(1).F(:,2) = temp2;
-            Grf(1).F(:,3) = temp3;
-            temp1 = Grf(1).M(:,3);
-            temp2 = Grf(1).M(:,2);
-            temp3 = -Grf(1).M(:,1);
-            Grf(1).M(:,1) = temp1;
-            Grf(1).M(:,2) = temp2;
-            Grf(1).M(:,3) = temp3;
+            for i=1:length(names)
+                temp1 = Grf(1).(names{i})(:,3);
+                temp2 = Grf(1).(names{i})(:,2);
+                temp3 = -Grf(1).(names{i})(:,1);
+                Grf(1).(names{i})(:,1) = temp1;
+                Grf(1).(names{i})(:,2) = temp2;
+                Grf(1).(names{i})(:,3) = temp3;
+            end
             % Forceplate 2
-            temp1 = Grf(2).P(:,3);
-            temp2 = Grf(2).P(:,2);
-            temp3 = -Grf(2).P(:,1);
-            Grf(2).P(:,1) = temp1;
-            Grf(2).P(:,2) = temp2;
-            Grf(2).P(:,3) = temp3;
-            temp1 = Grf(2).F(:,3);
-            temp2 = Grf(2).F(:,2);
-            temp3 = -Grf(2).F(:,1);
-            Grf(2).F(:,1) = temp1;
-            Grf(2).F(:,2) = temp2;
-            Grf(2).F(:,3) = temp3;
-            temp1 = Grf(2).M(:,3);
-            temp2 = Grf(2).M(:,2);
-            temp3 = -Grf(2).M(:,1);
-            Grf(2).M(:,1) = temp1;
-            Grf(2).M(:,2) = temp2;
-            Grf(2).M(:,3) = temp3;    
+            for i=1:length(names)
+                temp1 = Grf(2).(names{i})(:,3);
+                temp2 = Grf(2).(names{i})(:,2);
+                temp3 = -Grf(2).(names{i})(:,1);
+                Grf(2).(names{i})(:,1) = temp1;
+                Grf(2).(names{i})(:,2) = temp2;
+                Grf(2).(names{i})(:,3) = temp3;
+            end
         elseif strcmp(system,'Qualisys')
-            % Forceplate 1    
-            temp1 = Grf(1).P(:,1);
-            temp2 = Grf(1).P(:,3);
-            temp3 = -Grf(1).P(:,2);
-            Grf(1).P(:,1) = temp1;
-            Grf(1).P(:,2) = temp2;
-            Grf(1).P(:,3) = temp3;
-            temp1 = Grf(1).F(:,1);
-            temp2 = Grf(1).F(:,3);
-            temp3 = -Grf(1).F(:,2);
-            Grf(1).F(:,1) = temp1;
-            Grf(1).F(:,2) = temp2;
-            Grf(1).F(:,3) = temp3;
-            temp1 = Grf(1).M(:,1);
-            temp2 = Grf(1).M(:,3);
-            temp3 = -Grf(1).M(:,2);
-            Grf(1).M(:,1) = temp1;
-            Grf(1).M(:,2) = temp2;
-            Grf(1).M(:,3) = temp3;
-            % Forceplate 2    
-            temp1 = Grf(2).P(:,1);
-            temp2 = Grf(2).P(:,3);
-            temp3 = -Grf(2).P(:,2);
-            Grf(2).P(:,1) = temp1;
-            Grf(2).P(:,2) = temp2;
-            Grf(2).P(:,3) = temp3;
-            temp1 = Grf(2).F(:,1);
-            temp2 = Grf(2).F(:,3);
-            temp3 = -Grf(2).F(:,2);
-            Grf(2).F(:,1) = temp1;
-            Grf(2).F(:,2) = temp2;
-            Grf(2).F(:,3) = temp3;
-            temp1 = Grf(2).M(:,1);
-            temp2 = Grf(2).M(:,3);
-            temp3 = -Grf(2).M(:,2);
-            Grf(2).M(:,1) = temp1;
-            Grf(2).M(:,2) = temp2;
-            Grf(2).M(:,3) = temp3;    
+            % Forceplate 1  
+            for i=1:length(names)
+                temp1 = Grf(1).(names{i})(:,1);
+                temp2 = Grf(1).(names{i})(:,3);
+                temp3 = -Grf(1).(names{i})(:,2);
+                Grf(1).(names{i})(:,1) = temp1;
+                Grf(1).(names{i})(:,2) = temp2;
+                Grf(1).(names{i})(:,3) = temp3;
+            end
+            % Forceplate 2 
+            for i=1:length(names)
+                temp1 = Grf(2).(names{i})(:,1);
+                temp2 = Grf(2).(names{i})(:,3);
+                temp3 = -Grf(2).(names{i})(:,2);
+                Grf(2).(names{i})(:,1) = temp1;
+                Grf(2).(names{i})(:,2) = temp2;
+                Grf(2).(names{i})(:,3) = temp3;
+            end
         end
-
+        % Si Donn�es de Fukuchi, on garde les plateformes utilisees
+        % uniquement
+        if strcmp(system,'Fukuchi')
+            [Grf,Gait] = modifyPF(Grf,Gait);
+        end
+        
         % =================================================================
         % Convert -X direction data to +X direction data
         % =================================================================
-%         for i=1:length(names)
-%             for j=1:2
-%                 Grf(j).(names{i})(:,1) = minusX*Grf(j).(names{i})(:,1);
-%                 Grf(j).(names{i})(:,3) = minusX*Grf(j).(names{i})(:,3);
-%             end
-%         end
-        
-        Grf(1).P(:,1) = minusX*Grf(1).P(:,1);
-        Grf(1).P(:,3) = minusX*Grf(1).P(:,3);
-        Grf(1).F(:,1) = minusX*Grf(1).F(:,1);
-        Grf(1).F(:,3) = minusX*Grf(1).F(:,3);
-        Grf(1).M(:,1) = minusX*Grf(1).M(:,1);
-        Grf(1).M(:,3) = minusX*Grf(1).M(:,3);
-        Grf(2).P(:,1) = minusX*Grf(2).P(:,1);
-        Grf(2).P(:,3) = minusX*Grf(2).P(:,3);
-        Grf(2).F(:,1) = minusX*Grf(2).F(:,1);
-        Grf(2).F(:,3) = minusX*Grf(2).F(:,3);
         Grf(2).M(:,1) = minusX*Grf(2).M(:,1);
-        Grf(2).M(:,3) = minusX*Grf(2).M(:,3);
+        for i=1:length(Grf)
+            for j=1:length(names)
+                Grf(i).(names{j})(:,1) = minusX*Grf(i).(names{j})(:,1);
+                Grf(i).(names{j})(:,3) = minusX*Grf(i).(names{j})(:,3);
+            end
+        end
 
         % =================================================================
         % Filt the data
@@ -205,6 +158,21 @@ if ~isempty(Grf)
         Grf(2).M(:,3) = filtfilt(B,A,Grf(2).M(:,3));
 
         % =================================================================
+        % "Zeeroing" the plateforms
+        % =================================================================
+        for i=1:2 
+            mGrf.F = mean(Grf(i).F(1:40,:),1);
+            Grf(i).F(1,:) = Grf(i).F(1,:) - mGrf.F(1);
+            Grf(i).F(2,:) = Grf(i).F(2,:) - mGrf.F(2);
+            Grf(i).F(3,:) = Grf(i).F(3,:) - mGrf.F(3);
+
+            mGrf.M = mean(Grf(i).M(1:40,:),1);
+            Grf(i).M(1,:) = Grf(i).M(1,:) - mGrf.M(1);
+            Grf(i).M(2,:) = Grf(i).M(2,:) - mGrf.M(2);
+            Grf(i).M(3,:) = Grf(i).M(3,:) - mGrf.M(3);
+        end
+
+        % =================================================================
         % Apply a 10N threshold
         % =================================================================
         threshold = 10;
@@ -238,17 +206,17 @@ if ~isempty(Grf)
         % =================================================================
         % Correction of COP
         % =================================================================
-        for i=1:length(Grf)
-            for j=1:3
-                I=[];
-                I=find(abs(Grf(i).P(:,j))>1);
-                if ~isempty(I)
-                    for k=1:length(I)
-                        Grf(i).P(I(k),j)=0;
-                    end
-                end
-            end
-        end
+%         for i=1:length(Grf)
+%             for j=1:3
+%                 I=[];
+%                 I=find(abs(Grf(i).P(:,j))>1);
+%                 if ~isempty(I)
+%                     for k=1:length(I)
+%                         Grf(i).P(I(k),j)=0;
+%                     end
+%                 end
+%             end
+%         end
         % =================================================================
         % Store markers as 3-array vectors
         % =================================================================

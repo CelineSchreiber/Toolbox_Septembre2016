@@ -273,7 +273,7 @@ if strcmp(system,'BTS')
     % A new anatomically based protocol for gait analysis in children
     % Gait Posture. 2007 Oct;26(4):560-71
     % =====================================================================      
-elseif strcmp(system,'Qualisys')
+elseif strcmp(system,'Qualisys')|strcmp(system,'Fukuchi')
 
     % Pelvis parameters
     % -----------------------------------------------------------------

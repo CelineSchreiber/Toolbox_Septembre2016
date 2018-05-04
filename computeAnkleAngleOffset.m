@@ -39,7 +39,7 @@ if strcmp(system,'BTS')
         theta1 = atan2(norm(cross(vec1,vec2)), dot(vec1,vec2))*180/pi;
     end
     Static(2).offset = 90-theta1;    
-elseif strcmp(system,'Qualisys')    
+elseif strcmp(system,'Qualisys')|strcmp(system,'Fukuchi')    
     Static(2).offset = 90;   
 %     Static(2).T = Mprod_array3(Tinv_array3(Q2Tw_array3(Static(3).Q)),...
 %         Q2Tu_array3(Static(2).Q));    

@@ -86,7 +86,7 @@ if ~isempty(Markers)
             minusX = -1;
         end
     end
-    if strcmp(system,'Qualisys')
+    if strcmp(system,'Qualisys')|strcmp(system,'Fukuchi')
         if isfield(Markers,'R_IAS')
             s=sum(Markers.R_IPS,2);
             ind=find(s>0);        

@@ -59,7 +59,7 @@ if strcmp(system,'BTS')
     z3 = Markers.l_mall(3,1);
     Session.left_leg_length = sqrt((x1-x2)^2 + (y1-y2)^2 + (z1-z2)^2) + ...
         sqrt((x2-x3)^2 + (y2-y3)^2 + (z2-z3)^2);
-elseif strcmp(system,'Qualisys') 
+elseif strcmp(system,'Qualisys')|strcmp(system,'Fukuchi') 
     x1 = Markers.R_FTC(1,1);
     y1 = Markers.R_FTC(2,1);
     z1 = Markers.R_FTC(3,1);
@@ -383,7 +383,7 @@ if strcmp(system,'BTS')
 % A new anatomically based protocol for gait analysis in children
 % Gait Posture. 2007 Oct;26(4):560-71
 % =========================================================================    
-elseif strcmp(system,'Qualisys')
+elseif strcmp(system,'Qualisys')|strcmp(system,'Fukuchi')
 
         % Pelvis parameters
         % ---------------------------------------------------------------------

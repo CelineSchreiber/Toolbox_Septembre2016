@@ -46,6 +46,9 @@ if isfield(Session,'Static')
         nK = btkGetLastFrame(staticK)-btkGetFirstFrame(staticK)+1;
         % Set kinematic data in the correct format
         Markers = prepareStaticKinematicData(Markers,staticK,nK,Session.system);
+        if isfield(Markers,'R_Ankle')
+           Markers = modifyMarkersNames(Markers); 
+        end
         % Define segments parameters
         [Session,Rstatic,Rmarkers,Rvmarkers] = prepareStaticSegmentParameters(Patient,Session,Markers,'Right',Session.system);
         [Session,Lstatic,Lmarkers,Lvmarkers] = prepareStaticSegmentParameters(Patient,Session,Markers,'Left',Session.system);
@@ -77,6 +80,9 @@ for i = 1:length(Session.Gait)
         % Initialise variables
         clear Markers n n1 n2 f1 f2 e;      
         Markers = btkGetMarkers(gait);
+        if isfield(Markers,'R_Ankle')
+           Markers = modifyMarkersNames(Markers); 
+        end
         Grf = btkGetGroundReactionWrenches(gait);
         n0 = btkGetFirstFrame(gait);
         n1 = btkGetLastFrame(gait)-n0+1;
@@ -84,7 +90,7 @@ for i = 1:length(Session.Gait)
         % Set kinematic data in the correct format
         [Markers,minusX] = prepareCycleKinematicData(Markers,Session.Gait(i),n1,Session.fpoint,Session.system);
         % Set kinetic data in the correct format
-        Grf = prepareCycleKineticData(Grf,Session.Gait(i),n1,n2,Session.fanalog,minusX,Session.system);        
+        [Grf,Session.Gait(i)] = prepareCycleKineticData(Grf,Session.Gait(i),n1,n2,Session.fanalog,minusX,Session.system);        
 %         [Tapis,Info.tapis] = btkGetAnalogs(gait);
 %         Tapis = prepareCycleKineticDataTapis(Tapis,Info.tapis.units,Session.Gait(i),n1,n2,Session.fanalog,minusX,Session.system);        
         % Right gait cycle

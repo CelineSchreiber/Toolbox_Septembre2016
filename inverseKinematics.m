@@ -141,7 +141,7 @@ if strcmp(system,'BTS')
     end
     % Obliquity 
     Foot.obli = [];
-elseif strcmp(system,'Qualisys')
+elseif strcmp(system,'Qualisys')|strcmp(system,'Fukuchi')
     % Tilt        
     Foot.T = Q2Tw_array3(Segment(2).Q);
     Foot.Euler = R2fixedZYX_array3(Foot.T(1:3,1:3,:));
@@ -184,7 +184,7 @@ if strcmp(system,'BTS')
         Clearance = met(:,2);
         Clearance = Clearance - Clearance(Events.CHS);
     end
-elseif strcmp(system,'Qualisys')
+elseif strcmp(system,'Qualisys')|strcmp(system,'Fukuchi')
     if strcmp(side,'Right')
         met = permute(Markers.R_FM5,[3,1,2]);
         Clearance = met(:,2);
@@ -208,7 +208,7 @@ if strcmp(system,'BTS')
     Kinematics.Ftilt = interp1(k,Foot.tilt,ko,'spline');
     Kinematics.Frota = interp1(k,Foot.rota,ko,'spline');
     Kinematics.Fobli = [];    
-elseif strcmp(system,'Qualisys')
+elseif strcmp(system,'Qualisys')|strcmp(system,'Fukuchi')
     Kinematics.Ftilt = interp1(k,Foot.tilt,ko,'spline');
     Kinematics.Frota = interp1(k,Foot.rota,ko,'spline');
     Kinematics.Fobli = interp1(k,Foot.obli,ko,'spline');
@@ -224,7 +224,7 @@ if strcmp(system,'BTS')
     Kinematics.LM2 = [];
     Kinematics.PD2 = [];
     Kinematics.AP2 = [];
-elseif strcmp(system,'Qualisys')
+elseif strcmp(system,'Qualisys')|strcmp(system,'Fukuchi')
     Kinematics.AA2 = interp1(k,permute(Segment(2).Euler(1,2,:),[3,2,1])*180/pi,ko,'spline');
     Kinematics.IER2 = interp1(k,permute(Segment(2).Euler(1,3,:),[3,2,1])*180/pi,ko,'spline');
     Kinematics.LM2 = interp1(k,permute(Segment(2).dj(1,1,:),[3,2,1]),ko,'spline');

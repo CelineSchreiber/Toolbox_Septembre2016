@@ -130,7 +130,7 @@ if strcmp(system,'BTS')
             break;
         end
     end
-elseif strcmp(system,'Qualisys')
+elseif strcmp(system,'Qualisys')|strcmp(system,'Fukuchi')
     marker1 = Markers.R_IAS;
     marker2 = Markers.L_IAS;
     marker3 = (Markers.R_IPS+Markers.L_IPS)/2;
@@ -170,7 +170,7 @@ if strcmp(system,'BTS')
             break;
         end
     end
-elseif strcmp(system,'Qualisys')
+elseif strcmp(system,'Qualisys')|strcmp(system,'Fukuchi')
     if strcmp(side,'Right')
         marker1 = Markers.R_FM5;
         marker2 = Markers.L_FAL;
@@ -206,7 +206,7 @@ if strcmp(system,'BTS')
             break;
         end
     end
-elseif strcmp(system,'Qualisys')
+elseif strcmp(system,'Qualisys')|strcmp(system,'Fukuchi')
     if strcmp(side,'Right')
         marker1 = Markers.R_FAL;
         marker2 = Markers.R_FAX;
