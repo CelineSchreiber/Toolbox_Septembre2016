@@ -11,7 +11,7 @@ cd ..
 % if strcmp(Session.gaittrial,'yes')
     TO=round(Normatives.Gaitparameters.right_stance_phase.data);
     S1=Normatives.Gaitparameters.right_stance_phase.data;
-    S2=Normatives.Gaitparameters.mean_velocity_adim.data;                    % Walking Speed/leg_length_R?;
+    S2=Normatives.Gaitparameters.mean_velocity_adim.data;                    % Walking Speed/sqrt(9.81*leg_length_R)?;
     S3=Normatives.Gaitparameters.cadence.data;                          % cadence en HZ
     S4=mean(Normatives.Rkinematics.Ptilt.data(:,1:2:end));              % Mean Pelvic Tilt
     S5=max(Normatives.Rkinematics.Ptilt.data(:,1:2:end))-min(Normatives.Rkinematics.Ptilt.data(:,1:2:end)); % Range of Pelvic Tilt
@@ -64,7 +64,7 @@ cd ..
     %Données Sujet Patient
     TO=round(Trial.Gaitparameters.right_stance_phase);
     P1=Trial.Gaitparameters.right_stance_phase;
-    P2=Trial.Gaitparameters.mean_velocity_adim;              % Walking Speed/leg_length_R?;
+    P2=Trial.Gaitparameters.mean_velocity_adim;              % Walking Speed/sqrt(9.81*leg_length_R)?;
     P3=Trial.Gaitparameters.cadence;                    % cadence en HZ
     P4=mean(Trial.Rkinematics.Ptilt(:,1));              % Mean Pelvic Tilt
     P5=max(Trial.Rkinematics.Ptilt(:,1))-min(Trial.Rkinematics.Ptilt(:,1)); % Range of Pelvic Tilt

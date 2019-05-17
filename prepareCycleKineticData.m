@@ -89,7 +89,7 @@ if ~isempty(Grf)
         % Si Donn�es de Fukuchi, on garde les plateformes utilisees
         % uniquement
         if strcmp(system,'Fukuchi')
-            [Grf,Gait] = modifyPF(Grf,Gait);
+            [Grf,Gait] = modifyPF(Grf,Gait,f2);
         end
         
         % =================================================================
@@ -161,15 +161,15 @@ if ~isempty(Grf)
         % "Zeeroing" the plateforms
         % =================================================================
         for i=1:2 
-            mGrf.F = mean(Grf(i).F(1:40,:),1);
-            Grf(i).F(1,:) = Grf(i).F(1,:) - mGrf.F(1);
-            Grf(i).F(2,:) = Grf(i).F(2,:) - mGrf.F(2);
-            Grf(i).F(3,:) = Grf(i).F(3,:) - mGrf.F(3);
+            mGrf.F = mean(Grf(i).F(1:50,:),1);
+            Grf(i).F(:,1) = Grf(i).F(:,1) - mGrf.F(1);
+            Grf(i).F(:,2) = Grf(i).F(:,2) - mGrf.F(2);
+            Grf(i).F(:,3) = Grf(i).F(:,3) - mGrf.F(3);
 
-            mGrf.M = mean(Grf(i).M(1:40,:),1);
-            Grf(i).M(1,:) = Grf(i).M(1,:) - mGrf.M(1);
-            Grf(i).M(2,:) = Grf(i).M(2,:) - mGrf.M(2);
-            Grf(i).M(3,:) = Grf(i).M(3,:) - mGrf.M(3);
+            mGrf.M = mean(Grf(i).M(1:50,:),1);
+            Grf(i).M(:,1) = Grf(i).M(:,1) - mGrf.M(1);
+            Grf(i).M(:,2) = Grf(i).M(:,2) - mGrf.M(2);
+            Grf(i).M(:,3) = Grf(i).M(:,3) - mGrf.M(3);
         end
 
         % =================================================================
@@ -206,17 +206,17 @@ if ~isempty(Grf)
         % =================================================================
         % Correction of COP
         % =================================================================
-%         for i=1:length(Grf)
-%             for j=1:3
-%                 I=[];
-%                 I=find(abs(Grf(i).P(:,j))>1);
-%                 if ~isempty(I)
-%                     for k=1:length(I)
-%                         Grf(i).P(I(k),j)=0;
-%                     end
-%                 end
-%             end
-%         end
+        for i=1:length(Grf)
+            for j=1:3
+                I=[];
+                I=find(abs(Grf(i).P(:,j))>1);
+                if ~isempty(I)
+                    for k=1:length(I)
+                        Grf(i).P(I(k),j)=0;
+                    end
+                end
+            end
+        end
         % =================================================================
         % Store markers as 3-array vectors
         % =================================================================

@@ -387,6 +387,7 @@ end
 % =========================================================================
 % Get clinical examination information
 % =========================================================================
+[~, temp41] = xlsread1(Excel,filename,1,'B21');
 if ~isempty(temp41)
     
     % Passive ranges of motion

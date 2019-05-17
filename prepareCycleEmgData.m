@@ -76,6 +76,10 @@ function Emg = prepareCycleEmgData(Info,Emg,units,f2,side,system)
                 Emg = rmfield(Emg, names{i});
                 units = rmfield(units,names{i});
             end
+            if strcmp(names{i},'Optogait')
+                Emg = rmfield(Emg, names{i});
+                units = rmfield(units,names{i});
+            end
         end
         names = fieldnames(Emg);
         for i = 1:length(names)
@@ -84,6 +88,7 @@ function Emg = prepareCycleEmgData(Info,Emg,units,f2,side,system)
                 units = rmfield(units,names{i});
             end
         end
+        
     end
 
     
@@ -169,7 +174,7 @@ function Emg = prepareCycleEmgData(Info,Emg,units,f2,side,system)
     elseif strcmp(side,'Left')    
         for i = 1:length(names)
             if strfind(names{i},'left_')                        
-                temp = permute(eval(['Emg.',names{i},';']),[3,1,2]);
+                temp = permute(Emg.(names{i}),[3,1,2]);
                 % Remove offset
                 temp0 = temp-mean(temp);
                 % Band-pass filtering of the EMG signals at 30–300 Hz
@@ -188,3 +193,19 @@ function Emg = prepareCycleEmgData(Info,Emg,units,f2,side,system)
             end
         end    
     end
+    
+    % =====================================================================
+    % MVC
+    % =====================================================================
+%     if isfield(Info.Static,'MVC')
+%         for i=1:length(Info.Static)
+%             if strncmp(Info.Static(i).condition,'MVC',3)
+%                 names=fieldnames(Info.Static(i).MVC);
+%                 for j=1:length(names)
+%                     if isfield (Emg,(names{j}))
+%                         Emg.(names{j})=Emg.(names{j})/Info.Static(i).MVC.(names{j});
+%                     end
+%                 end
+%             end
+%         end
+%     end

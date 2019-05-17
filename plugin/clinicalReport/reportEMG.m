@@ -65,7 +65,14 @@ else
     f=0;
     return;
 end
-
+% for i=1:length(Session(icondition).Gait)
+%     if strcmp(Session(icondition).Gait(i).filename,files(itrial,:))
+%         itr=i;
+%     end
+% end
+itrialf=itrial;
+% itrial=itr;
+    
 number_frame_cycle = Condition(icondition).Gait(itrial).Revents.e.LHS(2)*Session(icondition).fanalog...
                 - Condition(icondition).Gait(itrial).Revents.e.LHS(1)*Session(icondition).fanalog;
 X_down = Condition(icondition).Gait(itrial).Revents.e.LHS(1)*Session(icondition).fanalog-2*number_frame_cycle;
@@ -173,7 +180,7 @@ if ~isempty(Condition(icondition).Gait(itrial).Remg)
         nbtrials=nbtrials+~isempty(Condition(icondition).Gait(j).Remg);
     end
     % Write the legend
-    text(0.05,y/pageHeight,[char(files(itrial,:))]);
+    text(0.05,y/pageHeight,[char(files(itrialf,:))]);
     text(0.25,y/pageHeight,'Norm','Color',[0.5 0.5 0.5]);
     text(0.33,y/pageHeight,[char(Session(icondition).date),...
         '     Nb essais : ',num2str(nbtrials),...
@@ -239,7 +246,7 @@ if ~isempty(Condition(icondition).Gait(itrial).Remg)
         if ~isempty(inorm)
             plot(inorm.mean(1:101,1)/max(inorm.mean(1:101,1)),'Linestyle','-','Linewidth',2,'Color',[0.5 0.5 0.5]);
         end
-        plot(Remg_filt.mean(1:101,g)/max(Remg_filt.mean(1:101,g)),'Linestyle','-','Linewidth',2,'Color',colorR(1,:));
+        plot(Remg_filt.mean(1:101,g),'Linestyle','-','Linewidth',2,'Color',colorR(1,:));%/max(Remg_filt.mean(1:101,g))
         set(Graph(igraph),'FontSize',8,'YGrid','on','XTick',[0:50:100],'YTick',0:0.25:1,'YTickLabel',{'0' '25' '50' '75' '100'});
         axis tight;
         axis([0 100 0 1]);
@@ -327,7 +334,7 @@ if ~isempty(Condition(icondition).Gait(itrial).Remg)
             end
         end
         % Write the legend
-        text(0.05,y/pageHeight,[char(files(itrial,:))]);
+        text(0.05,y/pageHeight,[char(files(itrialf,:))]);
         text(0.25,y/pageHeight,'Norm','Color',[0.5 0.5 0.5]);
         text(0.33,y/pageHeight,[char(Session(icondition).date),...
             '     Nb essais : ',num2str(nbtrials),...
@@ -393,7 +400,7 @@ if ~isempty(Condition(icondition).Gait(itrial).Remg)
             if ~isempty(inorm)
                 plot(inorm.mean(1:101,1)/max(inorm.mean(1:101,1)),'Linestyle','-','Linewidth',2,'Color',[0.5 0.5 0.5]);
             end
-            plot(Remg_filt.mean(1:101,g)/max(Remg_filt.mean(1:101,g)),'Linestyle','-','Linewidth',2,'Color',colorL(1,:));
+            plot(Remg_filt.mean(1:101,g),'Linestyle','-','Linewidth',2,'Color',colorL(1,:));%/max(Remg_filt.mean(1:101,g))
             set(Graph(igraph),'FontSize',8,'YGrid','on','XTick',[0:50:100],'YTick',0:0.25:1,'YTickLabel',{'0' '25' '50' '75' '100'});
             axis tight;
             axis([0 100 0 1]);
@@ -406,7 +413,7 @@ if ~isempty(Condition(icondition).Gait(itrial).Remg)
    % Mise à échelle de tous les graphes
     for igraph=1:2:(2*g-1)
         axes(Graph(igraph));
-        YL = [-2e-4,2e-4];
+        YL = [-4e-4,4e-4];
         XL = xlim;
         XL(1) = max(XL(1),X_down);
         XL(2) = min(XL(2),X_up);
@@ -530,7 +537,7 @@ if ~isempty(Condition(icondition).Gait(itrial).Lemg)
         end
     end
     % Write the legend
-    text(0.05,y/pageHeight,[char(files(itrial,:))]);
+    text(0.05,y/pageHeight,[char(Session(icondition).Gait(itrial).filename)]);
     text(0.25,y/pageHeight,'Norm','Color',[0.5 0.5 0.5]);
     text(0.33,y/pageHeight,[char(Session(icondition).date),...
         '     Nb essais : ',num2str(nbtrials),...
@@ -565,6 +572,7 @@ if ~isempty(Condition(icondition).Gait(itrial).Lemg)
         plot(1:isize,zeros(isize,1),'Linestyle','-','Linewidth',0.5,'Color','black');
         plot(Lemg_raw(1:isize,g),'Linestyle','-','Linewidth',0.5,'Color',colorL(1,:));
         axis tight;
+%         ylim([-0.001 0.001]);
     end
     % ENVELOPPE
     for igraph=2:2:(2*min(length(Lemg_name),8))
@@ -596,7 +604,7 @@ if ~isempty(Condition(icondition).Gait(itrial).Lemg)
         if ~isempty(inorm)
             plot(inorm.mean(1:101,1)/max(inorm.mean(1:101,1)),'Linestyle','-','Linewidth',2,'Color',[0.5 0.5 0.5]);
         end
-        plot(Lemg_filt.mean(1:101,g)/max(Lemg_filt.mean(1:101,g)),'Linestyle','-','Linewidth',2,'Color',colorL(1,:));
+        plot(Lemg_filt.mean(1:101,g),'Linestyle','-','Linewidth',2,'Color',colorL(1,:));%/max(Lemg_filt.mean(1:101,g))
         set(Graph(igraph),'FontSize',8,'YGrid','on','XTick',[0:50:100],'YTick',0:0.25:1,'YTickLabel',{'0' '25' '50' '75' '100'});
         axis tight;
         axis([0 100 0 1]);
@@ -684,7 +692,7 @@ if ~isempty(Condition(icondition).Gait(itrial).Lemg)
             end
         end
         % Write the legend
-        text(0.05,y/pageHeight,[char(files(itrial,:))]);
+        text(0.05,y/pageHeight,[char(files(itrialf,:))]);
         text(0.25,y/pageHeight,'Norm','Color',[0.5 0.5 0.5]);
         text(0.33,y/pageHeight,[char(Session(icondition).date),...
             '     Nb essais : ',num2str(nbtrials),...
@@ -750,7 +758,7 @@ if ~isempty(Condition(icondition).Gait(itrial).Lemg)
             if ~isempty(inorm)
                 plot(inorm.mean(1:101,1)/max(inorm.mean(1:101,1)),'Linestyle','-','Linewidth',2,'Color',[0.5 0.5 0.5]);
             end
-            plot(Lemg_filt.mean(1:101,g)/max(Lemg_filt.mean(1:101,g)),'Linestyle','-','Linewidth',2,'Color',colorL(1,:));
+            plot(Lemg_filt.mean(1:101,g),'Linestyle','-','Linewidth',2,'Color',colorL(1,:));%/max(Lemg_filt.mean(1:101,g))
             set(Graph(igraph),'FontSize',8,'YGrid','on','XTick',[0:50:100],'YTick',0:0.25:1,'YTickLabel',{'0' '25' '50' '75' '100'});
             axis tight;
             axis([0 100 0 1]);

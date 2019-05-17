@@ -112,8 +112,8 @@ if ~strcmp(Session.markersset,'Aucun')
             (((Lmarkers.R_IAS(1,:,end)+Lmarkers.L_IAS(1,:,end))/2) - ...
             ((Lmarkers.R_IAS(1,:,1)+Lmarkers.L_IAS(1,:,1))/2))/Gaitparameters.left_gait_cycle]);
     end
-    L0=(Session.right_leg_length+Session.right_leg_length)/2;
-    Gaitparameters.mean_velocity_adim=Gaitparameters.mean_velocity/sqrt(9.81*L0);
+    L0=(Session.right_leg_length+Session.left_leg_length)/2;
+    Gaitparameters.mean_velocity_adim = Gaitparameters.mean_velocity/sqrt(9.81*L0);
 end
 
 if Gaitparameters.mean_velocity<0.06 %TAPIS!!!
@@ -128,5 +128,5 @@ if Gaitparameters.mean_velocity<0.06 %TAPIS!!!
             ((Rmarkers.R_FM1(1,:,T2R)+Rmarkers.R_FM5(1,:,T2R))/2))/((T2R-11)/Session.fpoint), ...
             (((Lmarkers.L_FM1(1,:,11)+Lmarkers.L_FM5(1,:,11))/2) - ...
             ((Lmarkers.L_FM1(1,:,T2L)+Lmarkers.L_FM5(1,:,T2L))/2))/((T2L-11)/Session.fpoint)]);
-    Gaitparameters.mean_velocity_adim=Gaitparameters.mean_velocity/L0;    
+    Gaitparameters.mean_velocity_adim=Gaitparameters.mean_velocity/sqrt(9.81*L0);    
 end

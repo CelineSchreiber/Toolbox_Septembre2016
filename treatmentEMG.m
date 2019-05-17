@@ -54,20 +54,18 @@ for i = 1:length(Session.Gait)
         disp(['    - EMG',num2str(i),' = ',char(Session.Gait(i).filename)]);        
         gait = Session.Gait(i).file;
 
-%         staticE = [];
-%         if isfield(Session,'Static')
-%             for i = 1:length(Session.Static)
-%                 if strcmp(Session.Static(i).condition,Condition.name) || strcmp(Session.Static(i).condition,'toutes conditions')
-%                     if strcmp(Session.Static(i).emgtrial,'yes')
-%                         staticE = Session.Static(i).file;
-%                     end
-%                 end
-%             end
 %     % EMG static trial
 %     % -------------------------------------------------------------------------
-%     % To be done
-%         end
-    
+        if isfield(Session,'Static')
+            for k = 1:length(Session.Static)
+                if strcmp(Session.Static(k).emgtrial,'yes')
+                    if strncmp(Session.Static(k).condition,'MVC',3)
+                        [SEmg,SInfo.emg] = btkGetAnalogs(Session.Static(k).file);
+                        Session = prepareStaticEmgData(Session,SEmg,SInfo.emg.units,k);
+                    end
+                end
+            end
+        end
         
         % Prepare gait cycle data
         % ----------------------------------------------------------------- 
