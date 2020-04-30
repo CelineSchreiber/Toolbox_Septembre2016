@@ -231,7 +231,7 @@ if ~isempty(Condition(icondition).Gait(itrial).Remg)
         inorm = [];
         names = fieldnames(Norm.EMG);
         for i = 1:length(names)
-            if strfind(regexprep(names{i},'right_',''),regexprep(Remg_name{g},'right_',''))
+            if strfind(regexprep(names{i},'right_',''),regexprep(regexprep(Remg_name{g},'right_',''),'_wire',''))
                 inorm = Norm.EMG.(names{i});
             end
         end

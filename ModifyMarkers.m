@@ -1,0 +1,11 @@
+Markers.R_FME(:,3)=Markers.R_FME(:,3)+40;
+Markers.R_FME(:,1)=Markers.R_FME(:,1)-5;
+Markers.L_FME(:,3)=Markers.L_FME(:,3)+40;
+Markers.L_FME(:,1)=Markers.L_FME(:,1)+5;
+btkSetPointNumber(staticK,btkGetPointNumber(staticK)+1);
+btkSetPoint(staticK,btkGetPointNumber(staticK),Markers.R_FME);
+btkSetPointLabel(staticK,btkGetPointNumber(staticK),'R_FME2');
+btkSetPointNumber(staticK,btkGetPointNumber(staticK)+1);
+btkSetPoint(staticK,btkGetPointNumber(staticK),Markers.L_FME);
+btkSetPointLabel(staticK,btkGetPointNumber(staticK),'L_FME2');
+btkWriteAcquisition(staticK,'test.c3d')

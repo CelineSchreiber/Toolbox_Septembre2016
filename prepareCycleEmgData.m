@@ -84,6 +84,13 @@ function Emg = prepareCycleEmgData(Info,Emg,units,f2,side,system)
                 units = rmfield(units,names{i});
             end
         end
+        names = fieldnames(Emg);
+        for i = 1:length(names)
+            if strfind(names{i},'Optogait')
+                Emg = rmfield(Emg, names{i});
+                units = rmfield(units,names{i});
+            end
+        end
     end
 
     
@@ -148,20 +155,37 @@ function Emg = prepareCycleEmgData(Info,Emg,units,f2,side,system)
     if strcmp(side,'Right')    
         for i = 1:length(names)
             if strfind(names{i},'right_')
-                temp = permute(Emg.(names{i}),[3,1,2]);
-                % Remove offset
-                temp0 = temp-mean(temp);
-                % Band-pass filtering of the EMG signals at 30–300 Hz
-                % (2th order Butterworth filter)
-                [B,A] = butter(2,[30/(f2/2) 300/(f2/2)],'bandpass');
-                temp1 = filtfilt(B,A,temp0);
-                % Rectify and low-pass filtering of the EMG signals at 6Hz
-                % (4th order Butterworth filter)
-                [B,A] = butter(4,6/(f2/2),'low');
-                temp2 = filtfilt(B,A,abs(temp1));            
-                % Export data
-                Emg.([names{i},'_raw']) = permute(temp1,[2,3,1]);
-                Emg.([names{i},'_cycle_filt']) = permute(temp2,[2,3,1]);
+                if strfind(names{i},'wire')
+                    temp = permute(Emg.(names{i}),[3,1,2]);
+                    % Remove offset
+                    temp0 = temp-mean(temp);
+                    % Band-pass filtering of the EMG signals at 30–300 Hz
+                    % (2th order Butterworth filter)
+                    [B,A] = butter(2,[60/(f2/2) 300/(f2/2)],'bandpass');
+                    temp1 = filtfilt(B,A,temp0);
+                    % Rectify and low-pass filtering of the EMG signals at 6Hz
+                    % (4th order Butterworth filter)
+                    [B,A] = butter(4,6/(f2/2),'low');
+                    temp2 = filtfilt(B,A,abs(temp1));            
+                    % Export data
+                    Emg.([names{i},'_raw']) = permute(temp1,[2,3,1]);
+                    Emg.([names{i},'_cycle_filt']) = permute(temp2,[2,3,1]);
+                else
+                    temp = permute(Emg.(names{i}),[3,1,2]);
+                    % Remove offset
+                    temp0 = temp-mean(temp);
+                    % Band-pass filtering of the EMG signals at 30–300 Hz
+                    % (2th order Butterworth filter)
+                    [B,A] = butter(2,[30/(f2/2) 300/(f2/2)],'bandpass');
+                    temp1 = filtfilt(B,A,temp0);
+                    % Rectify and low-pass filtering of the EMG signals at 6Hz
+                    % (4th order Butterworth filter)
+                    [B,A] = butter(4,6/(f2/2),'low');
+                    temp2 = filtfilt(B,A,abs(temp1));            
+                    % Export data
+                    Emg.([names{i},'_raw']) = permute(temp1,[2,3,1]);
+                    Emg.([names{i},'_cycle_filt']) = permute(temp2,[2,3,1]);
+                end
             else
                 Emg = rmfield(Emg,names{i});
             end
@@ -169,20 +193,37 @@ function Emg = prepareCycleEmgData(Info,Emg,units,f2,side,system)
     elseif strcmp(side,'Left')    
         for i = 1:length(names)
             if strfind(names{i},'left_')                        
-                temp = permute(eval(['Emg.',names{i},';']),[3,1,2]);
-                % Remove offset
-                temp0 = temp-mean(temp);
-                % Band-pass filtering of the EMG signals at 30–300 Hz
-                % (4th order Butterworth filter)
-                [B,A] = butter(4,[30/(f2/2) 300/(f2/2)],'bandpass');
-                temp1 = filtfilt(B,A,temp0);
-                % Rectify and low-pass filtering of the EMG signals at 6Hz
-                % (4th order Butterworth filter)
-                [B,A] = butter(4,6/(f2/2),'low');
-                temp2 = filtfilt(B,A,abs(temp1));            
-                % Export data
-                Emg.([names{i},'_raw']) = permute(temp1,[2,3,1]);
-                Emg.([names{i},'_cycle_filt']) = permute(temp2,[2,3,1]);
+                if strfind(names{i},'wire')
+                    temp = permute(Emg.(names{i}),[3,1,2]);
+                    % Remove offset
+                    temp0 = temp-mean(temp);
+                    % Band-pass filtering of the EMG signals at 30–300 Hz
+                    % (2th order Butterworth filter)
+                    [B,A] = butter(2,[60/(f2/2) 300/(f2/2)],'bandpass');
+                    temp1 = filtfilt(B,A,temp0);
+                    % Rectify and low-pass filtering of the EMG signals at 6Hz
+                    % (4th order Butterworth filter)
+                    [B,A] = butter(4,6/(f2/2),'low');
+                    temp2 = filtfilt(B,A,abs(temp1));            
+                    % Export data
+                    Emg.([names{i},'_raw']) = permute(temp1,[2,3,1]);
+                    Emg.([names{i},'_cycle_filt']) = permute(temp2,[2,3,1]);
+                else
+                    temp = permute(Emg.(names{i}),[3,1,2]);
+                    % Remove offset
+                    temp0 = temp-mean(temp);
+                    % Band-pass filtering of the EMG signals at 30–300 Hz
+                    % (2th order Butterworth filter)
+                    [B,A] = butter(2,[30/(f2/2) 300/(f2/2)],'bandpass');
+                    temp1 = filtfilt(B,A,temp0);
+                    % Rectify and low-pass filtering of the EMG signals at 6Hz
+                    % (4th order Butterworth filter)
+                    [B,A] = butter(4,6/(f2/2),'low');
+                    temp2 = filtfilt(B,A,abs(temp1));            
+                    % Export data
+                    Emg.([names{i},'_raw']) = permute(temp1,[2,3,1]);
+                    Emg.([names{i},'_cycle_filt']) = permute(temp2,[2,3,1]);
+                end
             else
                 Emg = rmfield(Emg,names{i});
             end

@@ -33,7 +33,7 @@ yinit = 29.0; % cm
 yincr = 0.5; % cm
 x=[1.5 8 14.5];
 igraph = 1; % graph number
-colorB = [0 0 0.8;0.2 0.2 0.8;0.5 0.5 0.8;0.7 0.7 0.8;0.9 0.9 0.8;0.9 0.9 0.6];
+colorB = [0 0.8 0;0 0.8 0.8;0 0.4 0;0 0.4 0.4;0 0.2 0;0 0.2 0.2];%[0 0 0.8;0.2 0.2 0.8;0.5 0.5 0.8;0.7 0.7 0.8;0.9 0.9 0.8;0.9 0.9 0.6];
 cd(normFolder);
 temp = load(cell2mat(norm));
 Norme = temp.Normatives.Rposturalindex.Ifunction;
