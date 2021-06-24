@@ -41,9 +41,12 @@ if strcmp(system,'BTS')
     Static(2).offset = 90-theta1;    
 elseif strcmp(system,'Qualisys')    
     Static(2).offset = 90;   
-%     Static(2).T = Mprod_array3(Tinv_array3(Q2Tw_array3(Static(3).Q)),...
-%         Q2Tu_array3(Static(2).Q));    
-%     Static(2).Euler = R2mobileZXY_array3(Static(2).T(1:3,1:3,:));
+    Static(2).T = Mprod_array3(Tinv_array3(Q2Tw_array3(Static(3).Q)),...
+        Q2Tu_array3(Static(2).Q));    
+    Static(2).Euler = R2mobileZYX_array3(Static(2).T(1:3,1:3,:)); %ZXY???
 %     Static(2).offset = permute(Static(2).Euler(1,1,:),[3,2,1])*180/pi;
+%     Foot.T = Q2Tw_array3(Static(2).Q);
+    Foot.Euler = R2fixedZYX_array3(Static(2).T(1:3,1:3,:));
+    Foot(3).offset = -permute(Foot.Euler(1,3,:),[3,2,1])*180/pi;%0
+    Static(3).offset = 0;
 end
-Static(3).offset =0;

@@ -57,6 +57,7 @@ Kinematics.IER4 = [];
 Kinematics.LM4 = [];
 Kinematics.AP4 = [];
 Kinematics.PD4 = [];
+Kinematics.Ttilt = [];
 
 % =====================================================================
 % Segment angles and displacements
@@ -172,6 +173,18 @@ elseif strcmp(system,'Qualisys')
 end
 
 % =====================================================================
+% Tibialis orientation - Tilt
+% =====================================================================
+if strcmp(system,'BTS')
+    
+elseif strcmp(system,'Qualisys')
+    % Tilt        
+    Tibialis.T = Q2Tw_array3(Segment(3).Q);
+    Tibialis.Euler = R2fixedZYX_array3(Tibialis.T(1:3,1:3,:));
+    Tibialis.tilt = permute(Tibialis.Euler(:,1,:),[3,2,1])*180/pi;
+end
+
+% =====================================================================
 % Clearance (height of the 5th foot metatarsal)
 % =====================================================================
 if strcmp(system,'BTS')
@@ -182,17 +195,17 @@ if strcmp(system,'BTS')
     elseif strcmp(side,'Left')
         met = permute(Markers.l_met,[3,1,2]);
         Clearance = met(:,2);
-        Clearance = Clearance - Clearance(Events.CHS);
+        Clearance = Clearance - min(Clearance);
     end
 elseif strcmp(system,'Qualisys')
     if strcmp(side,'Right')
         met = permute(Markers.R_FM5,[3,1,2]);
         Clearance = met(:,2);
-%         Clearance = Clearance - min(Clearance);
+        Clearance = Clearance - min(Clearance);
     elseif strcmp(side,'Left')
         met = permute(Markers.L_FM5,[3,1,2]);
         Clearance = met(:,2);
-%         Clearance = Clearance - min(Clearance);
+        Clearance = Clearance - min(Clearance);
     end
 end
 
@@ -244,4 +257,6 @@ Kinematics.AA4 = interp1(k,permute(Segment(4).Euler(1,2,:),[3,2,1])*180/pi,ko,'s
 Kinematics.IER4 = interp1(k,permute(Segment(4).Euler(1,3,:),[3,2,1])*180/pi,ko,'spline');
 Kinematics.LM4 = interp1(k,permute(Segment(4).dj(1,1,:),[3,2,1]),ko,'spline');
 Kinematics.AP4 = interp1(k,permute(Segment(4).dj(2,1,:),[3,2,1]),ko,'spline');
-Kinematics.PD4 = interp1(k,permute(Segment(4).dj(3,1,:),[3,2,1]),ko,'spline');  
+Kinematics.PD4 = interp1(k,permute(Segment(4).dj(3,1,:),[3,2,1]),ko,'spline'); 
+
+Kinematics.Ttilt = interp1(k,Tibialis.tilt,ko,'spline');

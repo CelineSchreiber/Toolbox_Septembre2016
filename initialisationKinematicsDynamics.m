@@ -55,6 +55,7 @@ Kinematics.IER4 = [];
 Kinematics.LM4 = [];
 Kinematics.AP4 = [];
 Kinematics.PD4 = [];
+Kinematics.Ttilt = [];
 
 Dynamics = [];
 Dynamics.LM1 = [];

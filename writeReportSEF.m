@@ -118,25 +118,36 @@ for iCondition=1:size(filename,2)
         xlswrite1(fnameSEF,cellstr('Temps'),sheet,['A',num2str(7)]);
         xlswrite1(fnameSEF,{'Genou' 'Genou' 'Genou' 'Genou' ...
             'Cheville' 'Cheville' 'Cheville' 'Cheville' ...
-            'Pied' 'Pied' 'Pied' 'Pied' 'Pied' 'Pied' 'Pied' 'Pied' 'Pied' 'Pied' 'Pied' 'Pied'},sheet,['B',num2str(7)]);
+            'Pied' 'Pied' 'Pied' 'Pied' 'Pied' 'Pied' 'Pied' 'Pied' 'Pied' 'Pied' 'Pied' 'Pied' ...
+            'Clearance' 'Clearance' 'Clearance' 'Clearance'},sheet,['B',num2str(7)]);
         xlswrite1(fnameSEF,{'Flexion (+) / Extension (-) (°)' 'Flexion (+) / Extension (-) (°)' 'Flexion (+) / Extension (-) (°)' 'Flexion (+) / Extension (-)' ...
             'Dorsif. (+) / Plantarf. (-) (°)' 'Dorsif. (+) / Plantarf. (-) (°)' 'Dorsif. (+) / Plantarf. (-) (°)' 'Dorsif. (+) / Plantarf. (-)' ...
-            'tilt' 'tilt' 'tilt' 'tilt' 'Abaissement meta 1 (+) / 5 (-) (°)' 'Abaissement meta 1 (+) / 5 (-) (°)' 'Abaissement meta 1 (+) / 5 (-) (°)' 'Abaissement meta 1 (+) / 5 (-) (°)' 'Angle de progr. (int. + / ext. -) (°)' 'Angle de progr. (int. + / ext. -) (°)' 'Angle de progr. (int. + / ext. -) (°)' 'Angle de progr. (int. + / ext. -) (°)'...
-            },sheet,['B',num2str(8)]);
+            'tilt' 'tilt' 'tilt' 'tilt' 'Abaissement meta 1 (+) / 5 (-) (°)' 'Abaissement meta 1 (+) / 5 (-) (°)' 'Abaissement meta 1 (+) / 5 (-) (°)' 'Abaissement meta 1 (+) / 5 (-) (°)' ... 
+            'Angle de progr. (int. + / ext. -) (°)' 'Angle de progr. (int. + / ext. -) (°)' 'Angle de progr. (int. + / ext. -) (°)' 'Angle de progr. (int. + / ext. -) (°)'...
+            'Clearance (cm)' 'Clearance (cm)' 'Clearance (cm)' 'Clearance (cm)'},sheet,['B',num2str(8)]);
         if strcmp(Pathology.affectedside,'Gauche') | strcmp(Pathology.affectedside,'Droite')
             xlswrite1(fnameSEF,{'Pathologique' 'Pathologique' 'Sain' 'Sain' ...
                 'Pathologique' 'Pathologique' 'Sain' 'Sain' ...
-                'Pathologique' 'Pathologique' 'Sain' 'Sain' 'Pathologique' 'Pathologique' 'Sain' 'Sain' 'Pathologique' 'Pathologique' 'Sain' 'Sain' ...
+                'Pathologique' 'Pathologique' 'Sain' 'Sain' ...
+                'Pathologique' 'Pathologique' 'Sain' 'Sain' ...
+                'Pathologique' 'Pathologique' 'Sain' 'Sain' ...
+                'Pathologique' 'Pathologique' 'Sain' 'Sain' ...
                 },sheet,['B',num2str(2)]);
         else
             xlswrite1(fnameSEF,{'Droite' 'Droite' 'Gauche' 'Gauche' ...
                 'Droite' 'Droite' 'Gauche' 'Gauche' ...
-                'Droite' 'Droite' 'Gauche' 'Gauche' 'Droite' 'Droite' 'Gauche' 'Gauche' 'Droite' 'Droite' 'Gauche' 'Gauche' ...
+                'Droite' 'Droite' 'Gauche' 'Gauche' ...
+                'Droite' 'Droite' 'Gauche' 'Gauche' ...
+                'Droite' 'Droite' 'Gauche' 'Gauche' ...
+                'Droite' 'Droite' 'Gauche' 'Gauche' ...
                 },sheet,['B',num2str(9)]);
         end
         xlswrite1(fnameSEF,{'Moyenne' 'Ecart-type' 'Moyenne' 'Ecart-type' ...
             'Moyenne' 'Ecart-type' 'Moyenne' 'Ecart-type' ...
-            'Moyenne' 'Ecart-type' 'Moyenne' 'Ecart-type' 'Moyenne' 'Ecart-type' 'Moyenne' 'Ecart-type' 'Moyenne' 'Ecart-type' 'Moyenne' 'Ecart-type'}...
+            'Moyenne' 'Ecart-type' 'Moyenne' 'Ecart-type' ...
+            'Moyenne' 'Ecart-type' 'Moyenne' 'Ecart-type' ...
+            'Moyenne' 'Ecart-type' 'Moyenne' 'Ecart-type' ...
+            'Moyenne' 'Ecart-type' 'Moyenne' 'Ecart-type'}...
             ,sheet,['B',num2str(10)]);
         xlswrite1(fnameSEF,cellstr(['Condition sans SEF']),sheet,['A',num2str(12)]);
         xlswrite1(fnameSEF,(0:1:100)',sheet,['A',num2str(13)]);
@@ -169,6 +180,11 @@ for iCondition=1:size(filename,2)
         xlswrite1(fnameSEF,Condition.All.Lkinematics.Frota.std,sheet,['S',num2str(nline+13)]);
         xlswrite1(fnameSEF,Condition.All.Rkinematics.Frota.mean,sheet,['T',num2str(nline+13)]);
         xlswrite1(fnameSEF,Condition.All.Rkinematics.Frota.std,sheet,['U',num2str(nline+13)]);
+        %---
+        xlswrite1(fnameSEF,(Condition.All.Lkinematics.Clearance.mean-min(Condition.All.Lkinematics.Clearance.mean))*100,sheet,['V',num2str(nline+13)]);
+        xlswrite1(fnameSEF,Condition.All.Lkinematics.Clearance.std*100,sheet,['W',num2str(nline+13)]);
+        xlswrite1(fnameSEF,(Condition.All.Rkinematics.Clearance.mean-min(Condition.All.Rkinematics.Clearance.mean))*100,sheet,['X',num2str(nline+13)]);
+        xlswrite1(fnameSEF,Condition.All.Rkinematics.Clearance.std*100,sheet,['Y',num2str(nline+13)]);
     else
         %---
         xlswrite1(fnameSEF,-Condition.All.Rkinematics.FE3.mean,sheet,['B',num2str(nline+13)]);
@@ -193,27 +209,34 @@ for iCondition=1:size(filename,2)
         xlswrite1(fnameSEF,Condition.All.Rkinematics.Frota.std,sheet,['S',num2str(nline+13)]);
         xlswrite1(fnameSEF,Condition.All.Lkinematics.Frota.mean,sheet,['T',num2str(nline+13)]);
         xlswrite1(fnameSEF,Condition.All.Lkinematics.Frota.std,sheet,['U',num2str(nline+13)]);
+        %---
+        xlswrite1(fnameSEF,(Condition.All.Rkinematics.Clearance.mean-min(Condition.All.Rkinematics.Clearance.mean))*100,sheet,['V',num2str(nline+13)]);
+        xlswrite1(fnameSEF,Condition.All.Rkinematics.Clearance.std*100,sheet,['W',num2str(nline+13)]);
+        xlswrite1(fnameSEF,(Condition.All.Lkinematics.Clearance.mean-min(Condition.All.Lkinematics.Clearance.mean))*100,sheet,['X',num2str(nline+13)]);
+        xlswrite1(fnameSEF,Condition.All.Lkinematics.Clearance.std*100,sheet,['Y',num2str(nline+13)]);
     end
 end
 
-% % cd('C:\Users\celine.schreiber\Documents\MATLAB\Toolbox_Septembre2016\norm')
-% % norm = load('Normes spontanee.mat');
-% % 
-% % % NORMATIVE DATA MEAN
-% % xlswrite1(fnameSEF,cellstr(['Norme']),sheet,['A',num2str(218)]);
-% % % Knee kinematics
-% % xlswrite1(fnameSEF,-norm.Normatives.Rkinematics.FE3.mean,sheet,['B219']); 
-% % xlswrite1(fnameSEF,-norm.Normatives.Rkinematics.FE3.std,sheet,['C219']); 
-% % % Ankle kinematics
-% % xlswrite1(fnameSEF,norm.Normatives.Rkinematics.FE2.mean,sheet,['F219']); 
-% % xlswrite1(fnameSEF,norm.Normatives.Rkinematics.FE2.std,sheet,['G219']); 
-% % % Foot kinematics
-% % xlswrite1(fnameSEF,norm.Normatives.Rkinematics.Ftilt.mean,sheet,['J219']);
-% % xlswrite1(fnameSEF,norm.Normatives.Rkinematics.Ftilt.std,sheet,['K219']);
-% % xlswrite1(fnameSEF,norm.Normatives.Rkinematics.Fobli.mean,sheet,['L219']);
-% % xlswrite1(fnameSEF,norm.Normatives.Rkinematics.Fobli.std,sheet,['M219']);
-% % xlswrite1(fnameSEF,norm.Normatives.Rkinematics.Frota.mean,sheet,['N219']);
-% % xlswrite1(fnameSEF,norm.Normatives.Rkinematics.Frota.std,sheet,['O219']);
+cd('C:\Users\celine.schreiber\Documents\MATLAB\Toolbox_Septembre2016\norm')
+norm = load('Normes spontanee.mat');
+
+% NORMATIVE DATA MEAN
+xlswrite1(fnameSEF,cellstr(['Norme']),sheet,['A',num2str(218)]);
+% Knee kinematics
+xlswrite1(fnameSEF,-norm.Normatives.Rkinematics.FE3.mean,sheet,['B219']); 
+xlswrite1(fnameSEF,-norm.Normatives.Rkinematics.FE3.std,sheet,['C219']); 
+% Ankle kinematics
+xlswrite1(fnameSEF,norm.Normatives.Rkinematics.FE2.mean,sheet,['F219']); 
+xlswrite1(fnameSEF,norm.Normatives.Rkinematics.FE2.std,sheet,['G219']); 
+% Foot kinematics
+xlswrite1(fnameSEF,norm.Normatives.Rkinematics.Ftilt.mean,sheet,['J219']);
+xlswrite1(fnameSEF,norm.Normatives.Rkinematics.Ftilt.std,sheet,['K219']);
+xlswrite1(fnameSEF,norm.Normatives.Rkinematics.Fobli.mean,sheet,['L219']);
+xlswrite1(fnameSEF,norm.Normatives.Rkinematics.Fobli.std,sheet,['M219']);
+xlswrite1(fnameSEF,norm.Normatives.Rkinematics.Frota.mean,sheet,['N219']);
+xlswrite1(fnameSEF,norm.Normatives.Rkinematics.Frota.std,sheet,['O219']);
+xlswrite1(fnameSEF,norm.Normatives.Rkinematics.Clearance.mean*100,sheet,['P219']);
+xlswrite1(fnameSEF,norm.Normatives.Rkinematics.Clearance.std*100,sheet,['Q219']);
 
 % system(['rename template.xlsx ',Patient.lastname,'_',Patient.firstname,'_',regexprep(Patient.birthdate,'/',''),'_AQM_',regexprep(Session(1).date,'/',''),'.xlsx']);
 % cd(toolboxFolder);

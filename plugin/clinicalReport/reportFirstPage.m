@@ -263,6 +263,13 @@ for i = 1:size(Condition,2)
     text(0.05,y/pageHeight,temp,...
         'Color','k','FontSize',10);
     y = y - yincr*1.5;
+%     temp = 'Commentaires :';
+%     text(0.05,y/pageHeight,temp,...
+%         'Color','k','FontSize',10);
+%     temp = char(Session(i).comments);
+%     text(0.20,y/pageHeight,temp,...
+%         'Color','k','FontSize',10);
+%     y = y - yincr*1.5;
 end
 
 % Treatment information

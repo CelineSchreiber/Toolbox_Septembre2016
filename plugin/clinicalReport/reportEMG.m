@@ -406,7 +406,7 @@ if ~isempty(Condition(icondition).Gait(itrial).Remg)
    % Mise à échelle de tous les graphes
     for igraph=1:2:(2*g-1)
         axes(Graph(igraph));
-        YL = [-2e-4,2e-4];
+        YL = [-4e-4,4e-4];
         XL = xlim;
         XL(1) = max(XL(1),X_down);
         XL(2) = min(XL(2),X_up);
@@ -764,7 +764,7 @@ if ~isempty(Condition(icondition).Gait(itrial).Lemg)
     % Mise à échelle de tous les graphes
     for igraph=1:2:(2*g-1)
         axes(Graph(igraph));
-        YL = [-2e-4,2e-4];
+        YL = [-4e-4,4e-4];
         XL = xlim;
         XL(1) = max(XL(1),X_down);
         XL(2) = min(XL(2),X_up);

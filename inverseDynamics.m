@@ -150,33 +150,27 @@ if s ~= 0
     % Hof, Scaling gait data to body size
     % Gait and Posture 4 (1996) 22-223
     % -----------------------------------------------------------------
-    if s ~= 0
-        for j = 1:n
-            M = permute(Joint(2).Mj(:,:,j),[3,1,2]);
-            Omega = permute(Segment(3).Omega(:,:,j) - Segment(2).Omega(:,:,j),[3,1,2]); % in ICS
-            Joint(2).power(:,:,j) = dot(M,Omega); % 3D joint power
-            Joint(2).alpha(:,:,j) = atan(norm(cross(M,Omega))/dot(M,Omega));
-            M = permute(Joint(3).Mj(:,:,j),[3,1,2]);
-            Omega = -permute(Segment(4).Omega(:,:,j) - Segment(3).Omega(:,:,j),[3,1,2]); % in ICS
-            Joint(3).power(:,:,j) = dot(M,Omega); % 3D joint power
-            Joint(3).alpha(:,:,j) = atan(norm(cross(M,Omega))/dot(M,Omega));
-            M = permute(Joint(4).Mj(:,:,j),[3,1,2]);
-            Omega = permute(Segment(5).Omega(:,:,j) - Segment(4).Omega(:,:,j),[3,1,2]); % in ICS
-            Joint(4).power(:,:,j) = dot(M,Omega); % 3D joint power
-            Joint(4).alpha(:,:,j) = atan(norm(cross(M,Omega))/dot(M,Omega));
-        end
-        Dynamics.Power2 = interp1(k,permute(Joint(2).power,[3,1,2]),ko,'spline')' / ...
-            (m0*g^(1/2)*l0^(3/2));
-        Dynamics.Power3 = interp1(k,permute(Joint(3).power,[3,1,2]),ko,'spline')' / ...
-            (m0*g^(1/2)*l0^(3/2));
-        Dynamics.Power4 = interp1(k,permute(Joint(4).power,[3,1,2]),ko,'spline')' / ...
-            (m0*g^(1/2)*l0^(3/2));
-    else 
-        Dynamics.Power2 = [];
-        Dynamics.Power3 = [];
-        Dynamics.Power4 = [];
+   for j = 1:n
+        M = permute(Joint(2).Mj(:,:,j),[3,1,2]);
+        Omega = permute(Segment(3).Omega(:,:,j) - Segment(2).Omega(:,:,j),[3,1,2]); % in ICS
+        Joint(2).power(:,:,j) = dot(M,Omega); % 3D joint power
+        Joint(2).alpha(:,:,j) = atan(norm(cross(M,Omega))/dot(M,Omega));
+        M = permute(Joint(3).Mj(:,:,j),[3,1,2]);
+        Omega = -permute(Segment(4).Omega(:,:,j) - Segment(3).Omega(:,:,j),[3,1,2]); % in ICS
+        Joint(3).power(:,:,j) = dot(M,Omega); % 3D joint power
+        Joint(3).alpha(:,:,j) = atan(norm(cross(M,Omega))/dot(M,Omega));
+        M = permute(Joint(4).Mj(:,:,j),[3,1,2]);
+        Omega = permute(Segment(5).Omega(:,:,j) - Segment(4).Omega(:,:,j),[3,1,2]); % in ICS
+        Joint(4).power(:,:,j) = dot(M,Omega); % 3D joint power
+        Joint(4).alpha(:,:,j) = atan(norm(cross(M,Omega))/dot(M,Omega));
     end
-
+    Dynamics.Power2 = interp1(k,permute(Joint(2).power,[3,1,2]),ko,'spline')' / ...
+        (m0*g^(1/2)*l0^(3/2));
+    Dynamics.Power3 = interp1(k,permute(Joint(3).power,[3,1,2]),ko,'spline')' / ...
+        (m0*g^(1/2)*l0^(3/2));
+    Dynamics.Power4 = interp1(k,permute(Joint(4).power,[3,1,2]),ko,'spline')' / ...
+        (m0*g^(1/2)*l0^(3/2));
+    
     % Dimensionless forces and moments
     % Hof, Scaling gait data to body size
     % Gait and Posture 4 (1996) 22-223
